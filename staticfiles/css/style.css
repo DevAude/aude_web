@@ -1,0 +1,1669 @@
+:root {
+   /* Mode Light */
+   --bg-primary: #ffffff;
+   --bg-secondary: #f8fafc;
+   --bg-tertiary: #f1f5f9;
+   --bg-card: #ffffff;
+   --bg-elevated: #f8fafc;
+
+   --text-primary: #1e293b;
+   --text-secondary: #475569;
+   --text-muted: #64748b;
+   --text-accent: #5869b1;
+
+   --image-border-color: rgb(197, 202, 245);
+   --border-color: #e2e8f0;
+   --border-accent: #5869b1;
+
+   --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+   --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+   --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.15);
+   --shadow-glow: 0 0 20px rgba(88, 105, 177, 0.3);
+
+   /* Accents */
+   --accent-primary: #5869b1;
+   --accent-secondary: #6366f1;
+   --accent-success: #10b981;
+   --accent-warning: #f59e0b;
+   --accent-danger: #ef4444;
+   --accent-gradient: linear-gradient(135deg, #5869b1, #6366f1);
+}
+
+[data-theme="dark"] {
+   /* Mode Dark */
+   --bg-primary: #0f172a;
+   --bg-secondary: #1e293b;
+   --bg-tertiary: #334155;
+   --bg-card: #1e293b;
+   --bg-elevated: #334155;
+
+   --text-primary: #f8fafc;
+   --text-secondary: #cbd5e1;
+   --text-muted: #94a3b8;
+   --text-accent: #7c8bd9;
+
+   --border-color: #334155;
+   --border-accent: #7c8bd9;
+
+   --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.3);
+   --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
+   --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.6);
+   --shadow-glow: 0 0 25px rgba(124, 139, 217, 0.4);
+
+   /* Accents pour dark mode */
+   --accent-primary: #7c8bd9;
+   --accent-secondary: #818cf8;
+   --accent-success: #34d399;
+   --accent-warning: #fbbf24;
+   --accent-danger: #f87171;
+   --accent-gradient: linear-gradient(135deg, #7c8bd9, #818cf8);
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+   line-height: 1.6;
+   color: var(--text-primary);
+   background-color: var(--bg-primary);
+   overflow-x: hidden;
+   scroll-behavior: smooth;
+   transition: background-color 0.3s ease, color 0.3s ease;
+}
+.text-muted {
+   color: var(--text-muted) !important;
+}
+
+/* Animations avancées */
+@keyframes fadeInUp {
+   from {
+      opacity: 0;
+      transform: translateY(30px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+@keyframes fadeInLeft {
+   from {
+      opacity: 0;
+      transform: translateX(-30px);
+   }
+   to {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+@keyframes fadeInRight {
+   from {
+      opacity: 0;
+      transform: translateX(30px);
+   }
+   to {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+@keyframes float {
+   0%,
+   100% {
+      transform: translateY(0px);
+   }
+   50% {
+      transform: translateY(-10px);
+   }
+}
+@keyframes pulse {
+   0%,
+   100% {
+      transform: scale(1);
+   }
+   50% {
+      transform: scale(1.05);
+   }
+}
+@keyframes slideInTab {
+   from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+   }
+}
+@keyframes glowPulse {
+   0%,
+   100% {
+      box-shadow: var(--shadow-medium);
+   }
+   50% {
+      box-shadow: var(--shadow-glow);
+   }
+}
+@keyframes shimmer {
+   0% {
+      background-position: -200px 0;
+   }
+   100% {
+      background-position: calc(200px + 100%) 0;
+   }
+}
+
+.fade-in-up {
+   animation: fadeInUp 0.6s ease-out forwards;
+}
+.fade-in-left {
+   animation: fadeInLeft 0.6s ease-out forwards;
+}
+.fade-in-right {
+   animation: fadeInRight 0.6s ease-out forwards;
+}
+
+.scroll-reveal {
+   opacity: 0;
+   transform: translateY(40px);
+   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.scroll-reveal.active {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+/* Typographie */
+.font-mono {
+   font-family: "JetBrains Mono", monospace;
+}
+.text-gradient {
+   background: var(--accent-gradient);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   background-clip: text;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+   position: fixed;
+   top: 20%;
+   right: 20px;
+   transform: translateY(-50%);
+   z-index: 1000;
+   background: var(--bg-card);
+   border: 2px solid var(--border-color);
+   border-radius: 50px;
+   padding: 12px;
+   box-shadow: var(--shadow-medium);
+   transition: all 0.3s ease;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   font-size: 1.2rem;
+   min-width: 60px;
+   justify-content: center;
+}
+
+.theme-toggle:hover {
+   border-color: var(--border-accent);
+   box-shadow: var(--shadow-glow);
+   transform: translateY(-50%) scale(1.1);
+}
+
+.theme-toggle .light-icon {
+   color: var(--accent-warning);
+}
+
+.theme-toggle .dark-icon {
+   color: var(--accent-primary);
+}
+.badge-group {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   gap: 5px;
+}
+
+/* Cards améliorées */
+.modern-card {
+   background: var(--bg-card);
+   border-radius: 20px;
+   border: 1px solid var(--border-color);
+   padding: 2rem;
+   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   box-shadow: var(--shadow-light);
+   height: 100%;
+   position: relative;
+   overflow: hidden;
+}
+
+.modern-card::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: -200px;
+   width: 200px;
+   height: 100%;
+   background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+   );
+   transition: left 0.6s ease;
+}
+
+[data-theme="dark"] .modern-card::before {
+   background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.05),
+      transparent
+   );
+}
+
+.modern-card:hover {
+   border-color: var(--border-accent);
+   box-shadow: var(--shadow-glow);
+   transform: translateY(-8px) scale(1.02);
+}
+
+.modern-card:hover::before {
+   left: 100%;
+}
+
+/* Buttons améliorés */
+.btn {
+   font-weight: 600;
+   border-radius: 14px;
+   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   position: relative;
+   overflow: hidden;
+   text-decoration: none;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.btn-primary-modern {
+   background: var(--accent-gradient);
+   border: none;
+   color: white;
+   padding: 14px 28px;
+   box-shadow: var(--shadow-medium);
+   position: relative;
+}
+
+.btn-primary-modern::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: -100%;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+   );
+   transition: left 0.5s ease;
+}
+
+.btn-primary-modern:hover {
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-glow);
+   color: white;
+}
+
+.btn-primary-modern:hover::before {
+   left: 100%;
+}
+
+.btn-outline-modern {
+   background: transparent;
+   border: 2px solid var(--accent-primary);
+   color: var(--accent-primary);
+   padding: 12px 28px;
+   position: relative;
+   overflow: hidden;
+}
+
+.btn-outline-modern::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: -100%;
+   width: 100%;
+   height: 100%;
+   background: var(--accent-gradient);
+   transition: left 0.3s ease;
+   z-index: 0;
+}
+
+.btn-outline-modern span {
+   position: relative;
+   z-index: 1;
+}
+
+.btn-outline-modern:hover {
+   color: white;
+   border-color: var(--accent-primary);
+   transform: translateY(-3px);
+}
+
+.btn-outline-modern:hover::before {
+   left: 0;
+}
+
+/* Header */
+.navbar {
+   background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.95) !important;
+   backdrop-filter: blur(20px);
+   border-bottom: 1px solid var(--border-color);
+   transition: all 0.3s ease;
+   padding: 1rem 0;
+}
+
+.fixed-nav-top {
+   top: 10px !important;
+}
+
+[data-theme="dark"] .navbar {
+   background: rgba(15, 23, 42, 0.95) !important;
+}
+
+.navbar.scrolled {
+   box-shadow: var(--shadow-medium);
+}
+
+.navbar-brand {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   text-decoration: none;
+   font-family: "JetBrains Mono", monospace;
+   font-weight: 800;
+   font-size: 1.5rem;
+}
+
+.logo-modern {
+   width: 40px;
+   height: 40px;
+   background: var(--accent-gradient);
+   border-radius: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: white;
+   font-weight: 900;
+   font-size: 1.2rem;
+   box-shadow: var(--shadow-medium);
+   transition: all 0.3s ease;
+}
+
+.logo-modern:hover {
+   transform: rotate(5deg) scale(1.1);
+   box-shadow: var(--shadow-glow);
+}
+
+.navbar-nav .nav-link {
+   color: var(--text-secondary) !important;
+   font-weight: 500;
+   transition: all 0.3s ease;
+   position: relative;
+   margin: 0 8px;
+   padding: 8px 16px !important;
+   border-radius: 10px;
+}
+
+.navbar-nav .nav-link::before {
+   content: "";
+   position: absolute;
+   bottom: 0;
+   left: 50%;
+   width: 0;
+   height: 2px;
+   background: var(--accent-gradient);
+   transition: all 0.3s ease;
+   transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link::after {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: var(--accent-gradient);
+   opacity: 0;
+   border-radius: 10px;
+   transition: all 0.4s ease;
+   z-index: -1;
+}
+
+.navbar-nav .nav-link.clicking::after {
+   opacity: 0.1;
+   animation: navigationPulse 0.6s ease-out;
+}
+
+@keyframes navigationPulse {
+   0% {
+      transform: scale(1);
+      opacity: 0.1;
+   }
+   50% {
+      transform: scale(1.05);
+      opacity: 0.2;
+   }
+   100% {
+      transform: scale(1);
+      opacity: 0.1;
+   }
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+   color: var(--accent-primary) !important;
+   background: rgba(88, 105, 177, 0.1);
+}
+
+.navbar-nav .nav-link:hover::before,
+.navbar-nav .nav-link.active::before {
+   width: 20px;
+}
+
+/* Hero Section */
+
+/* --- CSS pour le Hero Background --- */
+
+/* 1. La section doit être un conteneur de positionnement */
+.hero {
+   position: relative;
+   overflow: hidden; /* S'assure que rien ne dépasse */
+   color: #fff; /* Texte blanc par défaut pour la lisibilité */
+}
+
+/* 2. Le SVG doit être positionné en absolu pour couvrir toute la section */
+.hero-background-svg {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 0; /* CRUCIAL: Placé derrière le contenu */
+}
+
+/* 3. Le conteneur du contenu doit être placé au-dessus du fond */
+.hero .container {
+   position: relative;
+   z-index: 1; /* CRUCIAL: Placé devant le SVG */
+}
+
+/* 4. Animation de pulsation pour l'orbe */
+@keyframes pulse-orb {
+   0% {
+      transform: scale(0.95);
+      opacity: 0.9;
+   }
+   50% {
+      transform: scale(1.05);
+      opacity: 1;
+   }
+   100% {
+      transform: scale(0.95);
+      opacity: 0.9;
+   }
+}
+
+.orb-container {
+   transform-origin: center center;
+   animation: pulse-orb 10s ease-in-out infinite;
+}
+
+/* 5. Animation de fondu pour les particules (optionnel mais recommandé) */
+.particles > circle {
+   animation: fade-particle linear infinite;
+   animation-duration: inherit; /* Hérite de la durée de animateMotion */
+   animation-delay: inherit; /* Hérite du délai de animateMotion */
+}
+
+@keyframes fade-particle {
+   0%,
+   100% {
+      opacity: 0;
+   }
+   10%,
+   90% {
+      opacity: 1;
+   }
+}
+
+.hero {
+   padding: 140px 0 100px;
+   background: var(--bg-primary);
+   position: relative;
+   overflow: hidden;
+}
+
+.hero::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: radial-gradient(
+      circle at 30% 20%,
+      rgba(88, 105, 177, 0.1) 0%,
+      transparent 50%
+   );
+   z-index: 1;
+}
+[data-theme="dark"] .hero::before {
+   background: radial-gradient(
+      circle at 30% 20%,
+      rgba(124, 139, 217, 0.1) 0%,
+      transparent 50%
+   );
+}
+
+.hero-content {
+   position: relative;
+   z-index: 2;
+}
+
+.hero h1 {
+   font-family: "JetBrains Mono", monospace;
+   font-size: clamp(1.5rem, 5vw, 3rem);
+   font-weight: 800;
+   line-height: 1.2;
+   margin-bottom: 1.5rem;
+}
+
+.hero .lead {
+   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+   color: #ffffff;
+   margin-bottom: 2.5rem;
+}
+
+.hero-image {
+   max-width: 100%;
+   height: auto;
+   border-radius: 20px;
+   border: 12px solid var(--image-border-color);
+   box-shadow: var(--shadow-heavy);
+   animation: float 6s ease-in-out infinite;
+   transition: all 0.3s ease;
+}
+
+.hero-image:hover {
+   transform: translateY(-5px) scale(1.02);
+   box-shadow: var(--shadow-glow);
+}
+
+/* =============================================== */
+/* ==       FOND DÉGRADÉ MODERNE (HERO)       == */
+/* =============================================== */
+
+.bg-gradient-hero {
+   /* 1. Couleur de base et contexte de positionnement */
+   background-color: var(--bg-secondary); /* Une couleur de fond subtile */
+   position: relative; /* ESSENTIEL pour positionner les formes floues */
+   overflow: hidden; /* ESSENTIEL pour contenir l'effet */
+   z-index: 1; /* S'assure que le fond reste derrière le contenu */
+}
+
+/* 2. On crée les formes floues avec des pseudo-éléments */
+.bg-gradient-hero::before,
+.bg-gradient-hero::after {
+   content: "";
+   position: absolute;
+   z-index: -1; /* Place les formes DERRIÈRE le contenu du hero */
+
+   /* 3. La magie : un filtre de flou très puissant ! */
+   filter: blur(150px);
+
+   /* On s'assure qu'elles sont rondes */
+   border-radius: 50%;
+}
+
+/* Première forme (couleur primaire) */
+.bg-gradient-hero::before {
+   width: 450px;
+   height: 450px;
+   background: rgba(88, 105, 177, 0.35);
+
+   /* Position initiale */
+   top: -150px;
+   left: -200px;
+
+   /* Animation lente */
+   animation: aurora-glow 25s linear infinite;
+}
+
+/* Deuxième forme (une autre couleur pour un effet plus riche) */
+.bg-gradient-hero::after {
+   width: 550px;
+   height: 550px;
+   /* Utilisez une autre couleur de votre palette, par exemple un rose/violet */
+   background: rgba(200, 80, 192, 0.3);
+
+   /* Position initiale différente */
+   bottom: -250px;
+   right: -200px;
+
+   /* Animation avec un délai pour ne pas être synchronisée */
+   animation: aurora-glow 35s linear infinite alternate;
+}
+
+/* 4. Définition de l'animation qui fait bouger les formes */
+@keyframes aurora-glow {
+   0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+   }
+   50% {
+      transform: translate(80px, 120px) rotate(180deg) scale(1.2);
+   }
+   100% {
+      transform: translate(0, 0) rotate(360deg) scale(1);
+   }
+}
+
+/* Adaptation pour le thème sombre */
+[data-theme="dark"] .bg-gradient-hero {
+   background-color: #0b1120; /* Un bleu très sombre comme base */
+}
+
+[data-theme="dark"] .bg-gradient-hero::before {
+   background: rgba(88, 105, 177, 0.3);
+}
+
+[data-theme="dark"] .bg-gradient-hero::after {
+   background: rgba(200, 80, 192, 0.25);
+}
+
+/* Sections */
+.section {
+   padding: 80px 0;
+   position: relative;
+   background-color: var(--bg-primary); /* Default for .section */
+}
+
+.section-alt {
+   background-color: var(--bg-secondary); /* Default for .section-alt */
+   padding: 80px 0;
+   position: relative;
+}
+
+.section-title {
+   font-family: "JetBrains Mono", monospace;
+   font-size: clamp(2rem, 4vw, 3rem);
+   font-weight: 700;
+   margin-bottom: 1rem;
+   text-align: center;
+}
+
+.section-subtitle {
+   font-size: clamp(1rem, 2vw, 1.2rem);
+   color: var(--text-secondary);
+   text-align: center;
+   margin-bottom: 3rem;
+   max-width: 700px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/* Onglets de tarification SIMPLIFIÉS */
+.pricing-tabs {
+   margin-bottom: 4rem;
+   position: relative;
+}
+
+.pricing-tabs .nav-tabs {
+   border: none;
+   justify-content: center;
+   gap: 1rem;
+   background: transparent;
+   padding: 0;
+}
+
+.pricing-tabs .nav-link {
+   background: var(--bg-card);
+   border: 2px solid var(--border-color);
+   border-radius: 15px;
+   color: var(--text-secondary);
+   font-weight: 600;
+   padding: 16px 28px;
+   transition: all 0.3s ease;
+   position: relative;
+   min-width: 160px;
+   text-align: center;
+   box-shadow: var(--shadow-light);
+}
+
+.pricing-tabs .nav-link:hover {
+   border-color: var(--accent-primary);
+   color: var(--accent-primary);
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-medium);
+}
+
+.pricing-tabs .nav-link.active {
+   background: var(--accent-gradient);
+   border-color: var(--accent-primary);
+   color: white;
+   font-weight: 700;
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-glow);
+}
+
+/* Badges d'économie améliorés pour les nouveaux onglets */
+.savings-badge {
+   position: absolute;
+   top: -8px;
+   right: -8px;
+   background: var(--accent-gradient);
+   color: white;
+   padding: 4px 8px;
+   border-radius: 12px;
+   font-size: 0.7rem;
+   font-weight: 700;
+   animation: glowPulse 2s infinite;
+   box-shadow: var(--shadow-medium);
+}
+
+/* Animation spéciale pour les onglets actifs */
+.pricing-tabs .nav-link.active .savings-badge {
+   background: rgba(255, 255, 255, 0.2);
+   animation: none;
+}
+
+/* Feature Cards améliorées */
+.feature-icon {
+   width: 70px;
+   height: 70px;
+   background: var(--accent-gradient);
+   border-radius: 18px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 1.5rem;
+   font-size: 1.8rem;
+   color: white;
+   box-shadow: var(--shadow-medium);
+   transition: all 0.4s ease;
+}
+
+.feature-icon:hover {
+   transform: scale(1.1) rotate(5deg);
+   box-shadow: var(--shadow-glow);
+}
+
+/* Stats améliorées */
+.stats-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 2rem;
+   margin: 3rem 0;
+}
+
+.stat-item {
+   text-align: center;
+   padding: 2.5rem;
+   background: var(--bg-card);
+   border-radius: 20px;
+   border: 1px solid var(--border-color);
+   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   box-shadow: var(--shadow-light);
+   position: relative;
+   overflow: hidden;
+}
+
+.stat-item::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 4px;
+   background: var(--accent-gradient);
+   transform: scaleX(0);
+   transition: transform 0.4s ease;
+}
+
+.stat-item:hover {
+   border-color: var(--border-accent);
+   box-shadow: var(--shadow-glow);
+   transform: translateY(-8px) scale(1.02);
+}
+
+.stat-item:hover::before {
+   transform: scaleX(1);
+}
+
+.stat-number {
+   font-family: "JetBrains Mono", monospace;
+   font-size: 3rem;
+   font-weight: 900;
+   color: var(--accent-primary);
+   display: block;
+   margin-bottom: 0.5rem;
+   text-shadow: 0 2px 4px rgba(88, 105, 177, 0.3);
+}
+[data-theme="dark"] .stat-number {
+   text-shadow: 0 2px 4px rgba(124, 139, 217, 0.3);
+}
+
+.stat-label {
+   color: var(--text-secondary);
+   font-size: 0.95rem;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   font-weight: 600;
+}
+
+/* Steps améliorés */
+.step-number {
+   width: 70px;
+   height: 70px;
+   background: var(--accent-gradient);
+   color: white;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 1.8rem;
+   font-weight: 800;
+   margin: 0 auto 1.5rem;
+   box-shadow: var(--shadow-medium);
+   transition: all 0.4s ease;
+}
+
+.step-number:hover {
+   transform: scale(1.15) rotate(10deg);
+   box-shadow: var(--shadow-glow);
+}
+
+/* Cartes de pricing avec structure flexbox */
+.pricing-card {
+   background: var(--bg-card);
+   border-radius: 24px;
+   border: 2px solid var(--border-color);
+   padding: 0; /* Remove padding to let card-body and card-footer manage it */
+   height: 100%;
+   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   position: relative;
+   text-align: center;
+   box-shadow: var(--shadow-light);
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+}
+
+.pricing-card::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 6px;
+   background: var(--accent-gradient);
+   transform: scaleX(0);
+   transition: transform 0.4s ease;
+   z-index: 1;
+}
+
+.pricing-card:hover {
+   border-color: var(--border-accent);
+   box-shadow: var(--shadow-glow);
+   transform: translateY(-10px) scale(1.02);
+}
+
+.pricing-card:hover::before {
+   transform: scaleX(1);
+}
+
+.pricing-card.featured {
+   border-color: var(--accent-primary);
+   transform: scale(1.05);
+   box-shadow: var(--shadow-glow);
+   background: linear-gradient(
+      145deg,
+      var(--bg-card) 0%,
+      rgba(88, 105, 177, 0.03) 100%
+   );
+}
+
+[data-theme="dark"] .pricing-card.featured {
+   background: linear-gradient(
+      145deg,
+      var(--bg-card) 0%,
+      rgba(124, 139, 217, 0.05) 100%
+   );
+}
+
+.pricing-card.featured::before {
+   transform: scaleX(1);
+   height: 8px;
+}
+
+/* Card Body - Contenu principal */
+.pricing-card .card-body {
+   flex: 1;
+   padding: 1.5em;
+   padding-bottom: 1em;
+   display: flex;
+   flex-direction: column;
+}
+
+/* Card Footer - Zone du bouton */
+.pricing-card .card-footer {
+   background: transparent;
+   border: none;
+   padding: 1em 1.5em 1.5em;
+   margin-top: auto;
+}
+
+/* Badge */
+.pricing-badge {
+   position: absolute;
+   top: -15px;
+   left: 15%;
+   width: 70%;
+   margin: auto;
+   background: var(--accent-gradient);
+   color: white;
+   padding: 12px 24px;
+   border-radius: 25px;
+   font-size: 0.85rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   box-shadow: var(--shadow-medium);
+   animation: glowPulse 3s infinite;
+   z-index: 2;
+}
+
+/* Prix */
+.price {
+   font-family: "JetBrains Mono", monospace;
+   font-size: 3.5rem;
+   font-weight: 900;
+   margin: 2rem 0 1rem;
+   background: var(--accent-gradient);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   background-clip: text;
+   text-shadow: 0 4px 8px rgba(88, 105, 177, 0.3);
+}
+
+[data-theme="dark"] .price {
+   text-shadow: 0 4px 8px rgba(124, 139, 217, 0.3);
+}
+
+/* Features */
+.pricing-features {
+   list-style: none;
+   padding: 0px;
+   margin: 2rem 0 0 0; /* Remove bottom margin */
+   text-align: left;
+   flex: 1; /* This makes features take available space */
+}
+
+.pricing-features li {
+   padding: 0.75rem 0;
+   position: relative;
+   padding-left: 2.5rem;
+   color: var(--text-secondary);
+   transition: all 0.3s ease;
+   border-radius: 8px;
+}
+
+.pricing-features li::before {
+   content: "✓";
+   position: absolute;
+   left: 0;
+   color: var(--accent-success);
+   font-weight: bold;
+   font-size: 1.2rem;
+   width: 24px;
+   height: 24px;
+   background: rgba(16, 185, 129, 0.1);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 0.9rem;
+}
+
+[data-theme="dark"] .pricing-features li::before {
+   background: rgba(52, 211, 153, 0.1);
+}
+
+.pricing-features li:hover {
+   background: rgba(88, 105, 177, 0.05);
+   color: var(--text-primary);
+   padding-left: 3rem;
+}
+
+[data-theme="dark"] .pricing-features li:hover {
+   background: rgba(124, 139, 217, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+   .pricing-card.featured {
+      transform: none;
+      margin-bottom: 2rem;
+   }
+
+   .pricing-card:hover {
+      transform: translateY(-10px) scale(1.02);
+   }
+}
+
+@media (max-width: 768px) {
+   .pricing-card .card-body {
+      padding: 1.2em;
+      padding-bottom: 0.8em;
+   }
+
+   .pricing-card .card-footer {
+      padding: 0.8em 1.2em 1.2em;
+   }
+}
+
+/* Badges améliorés */
+.badge-modern {
+   background: rgba(88, 105, 177, 0.15);
+   color: var(--accent-primary);
+   border: 1px solid var(--accent-primary);
+   padding: 6px 16px;
+   border-radius: 25px;
+   /* font-size: 0.8rem; */
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   transition: all 0.3s ease;
+}
+[data-theme="dark"] .badge-modern {
+   background: rgba(124, 139, 217, 0.15);
+}
+
+.badge-modern:hover {
+   background: var(--accent-primary);
+   color: white;
+   transform: translateY(-1px);
+   box-shadow: var(--shadow-medium);
+}
+
+/* FAQ améliorées */
+.faq-item {
+   background: var(--bg-card);
+   border-radius: 16px;
+   margin-bottom: 1rem;
+   box-shadow: var(--shadow-light);
+   border: 1px solid var(--border-color);
+   overflow: hidden;
+   transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+   box-shadow: var(--shadow-medium);
+   border-color: var(--border-accent);
+}
+
+.faq-question {
+   background: transparent;
+   border: none;
+   padding: 1.5rem;
+   width: 100%;
+   text-align: left;
+   font-weight: 600;
+   cursor: pointer;
+   color: var(--text-primary);
+   transition: all 0.3s ease;
+   display: flex;
+   align-items: center;
+}
+
+.faq-question:hover {
+   background: var(
+      --bg-tertiary
+   ); /* Changed from bg-secondary for better contrast */
+}
+
+.faq-answer {
+   padding: 0 1.5rem 1.5rem;
+   color: var(--text-secondary);
+   /* display: none; removed for JS control */
+   line-height: 1.6;
+   animation: slideInTab 0.3s ease-out;
+   max-height: 0; /* For JS animation */
+   opacity: 0; /* For JS animation */
+   overflow: hidden; /* For JS animation */
+   transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
+      padding-bottom 0.3s ease-out; /* For JS animation */
+}
+
+.faq-answer.active {
+   /* display: block; removed for JS control */
+   padding-bottom: 1.5rem; /* For JS animation */
+   /* max-height and opacity set by JS */
+}
+
+/* Footer amélioré */
+.footer {
+   background: var(--bg-secondary);
+   border-top: 1px solid var(--border-color);
+   padding: 4rem 0 2rem;
+   position: relative;
+}
+
+.footer::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 4px;
+   background: var(--accent-gradient);
+}
+
+.footer h5 {
+   color: var(--accent-primary);
+   font-weight: 600;
+   margin-bottom: 1.5rem;
+   font-family: "JetBrains Mono", monospace;
+}
+
+.footer a {
+   color: var(--text-secondary);
+   text-decoration: none;
+   transition: all 0.3s ease;
+}
+
+.footer a:hover {
+   color: var(--accent-primary);
+   transform: translateX(3px);
+}
+
+.social-icons a {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 45px;
+   height: 45px;
+   background: var(--bg-card);
+   border: 1px solid var(--border-color);
+   border-radius: 12px;
+   color: var(--text-secondary);
+   margin-right: 0.75rem;
+   transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+   border-color: var(--accent-primary);
+   color: var(--accent-primary);
+   background: rgba(88, 105, 177, 0.1);
+   transform: translateY(-3px) scale(1.1);
+   box-shadow: var(--shadow-medium);
+}
+[data-theme="dark"] .social-icons a:hover {
+   background: rgba(124, 139, 217, 0.1);
+}
+
+/* Responsive amélioré */
+@media (max-width: 991px) {
+   .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+   }
+   .section,
+   .section-alt {
+      padding: 60px 0;
+   }
+   .pricing-card.featured {
+      transform: none;
+      margin-bottom: 2rem; /* Add margin if it was removed by transform:none */
+   }
+   .pricing-card:hover {
+      /* Ensure hover works on mobile for featured cards */
+      transform: translateY(-10px) scale(1.02);
+   }
+   .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      top: auto;
+      transform: none;
+   }
+   .theme-toggle:hover {
+      /* Adjust hover for fixed bottom position */
+      transform: scale(1.1);
+   }
+}
+
+@media (max-width: 768px) {
+   .hero h1 {
+      font-size: 2rem;
+   }
+   .section-title {
+      font-size: 1.8rem;
+   }
+   .logo-modern {
+      width: 35px;
+      height: 35px;
+      font-size: 1rem;
+   }
+   .stats-grid {
+      grid-template-columns: repeat(
+         auto-fit,
+         minmax(200px, 1fr)
+      ); /* Adjusted for smaller screens */
+      gap: 1rem;
+   }
+   .pricing-tabs .nav-tabs {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+   }
+   .pricing-tabs .nav-link {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+      min-width: 140px;
+   }
+}
+
+/* Animations */
+.float {
+   animation: float 3s ease-in-out infinite;
+}
+.pulse {
+   animation: pulse 2s ease-in-out infinite;
+}
+
+/* Gradient backgrounds pour sections */
+.bg-gradient-primary {
+   background: var(--accent-gradient);
+   color: white;
+   position: relative;
+   overflow: hidden;
+   padding: 80px 0; /* Added padding like other sections */
+}
+
+.bg-gradient-primary::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: radial-gradient(
+         circle at 20% 80%,
+         rgba(255, 255, 255, 0.1) 0%,
+         transparent 50%
+      ),
+      radial-gradient(
+         circle at 80% 20%,
+         rgba(255, 255, 255, 0.1) 0%,
+         transparent 50%
+      );
+}
+[data-theme="dark"] .bg-gradient-primary::before {
+   background: radial-gradient(
+         circle at 20% 80%,
+         rgba(255, 255, 255, 0.05) 0%,
+         transparent 50%
+      ),
+      radial-gradient(
+         circle at 80% 20%,
+         rgba(255, 255, 255, 0.05) 0%,
+         transparent 50%
+      );
+}
+
+.bg-gradient-primary .section-subtitle {
+   color: rgba(255, 255, 255, 0.9);
+}
+
+/* Effets de shimmer pour les éléments premium */
+.shimmer {
+   background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%
+   );
+   background-size: 200px 100%;
+   animation: shimmer 2s infinite;
+}
+[data-theme="dark"] .shimmer {
+   background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 100%
+   );
+}
+
+/* Tab content animation */
+.tab-pane {
+   animation: slideInTab 0.5s ease-out;
+}
+
+/* WhatsApp Button */
+.whatsapp-button {
+   position: fixed;
+   bottom: 30px;
+   right: 30px;
+   z-index: 1000;
+   background: #25d366;
+   border: none;
+   border-radius: 50%;
+   width: 60px;
+   height: 60px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: white;
+   font-size: 1.8rem;
+   cursor: pointer;
+   box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   animation: whatsappPulse 2s infinite;
+}
+
+.whatsapp-button:hover {
+   transform: scale(1.1);
+   box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+   background: #128c7e;
+}
+
+.whatsapp-button:active {
+   transform: scale(0.95);
+}
+
+/* Tooltip WhatsApp */
+.whatsapp-tooltip {
+   position: absolute;
+   right: 70px;
+   top: 50%;
+   transform: translateY(-50%);
+   background: var(--bg-card);
+   border: 1px solid var(--border-color);
+   border-radius: 15px;
+   padding: 12px 16px;
+   box-shadow: var(--shadow-medium);
+   opacity: 0;
+   visibility: hidden;
+   transition: all 0.3s ease;
+   white-space: nowrap;
+   pointer-events: none;
+}
+
+.whatsapp-tooltip::after {
+   content: "";
+   position: absolute;
+   right: -8px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 0;
+   height: 0;
+   border-left: 8px solid var(--bg-card);
+   border-top: 8px solid transparent;
+   border-bottom: 8px solid transparent;
+}
+
+.whatsapp-tooltip span {
+   color: var(--text-primary);
+   font-size: 0.9rem;
+   font-weight: 500;
+}
+
+.whatsapp-button:hover .whatsapp-tooltip {
+   opacity: 1;
+   visibility: visible;
+   transform: translateY(-50%) translateX(-10px);
+}
+
+/* Animation pulse pour WhatsApp */
+@keyframes whatsappPulse {
+   0%,
+   100% {
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+   }
+   50% {
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5),
+         0 0 0 10px rgba(37, 211, 102, 0.1);
+   }
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+   .whatsapp-button {
+      bottom: 20px;
+      right: 20px;
+      width: 55px;
+      height: 55px;
+      font-size: 1.6rem;
+   }
+
+   .whatsapp-tooltip {
+      display: none; /* Cache le tooltip sur mobile */
+   }
+
+   /* Ajuste la position du theme-toggle pour éviter la superposition */
+   .theme-toggle {
+      bottom: 90px;
+      right: 20px;
+   }
+}
+
+/* Mode sombre */
+[data-theme="dark"] .whatsapp-tooltip {
+   background: var(--bg-card);
+   border-color: var(--border-color);
+}
+
+[data-theme="dark"] .whatsapp-tooltip::after {
+   border-left-color: var(--bg-card);
+}
+
+/* Video Modal Styles - Z-index élevé pour passer au-dessus */
+#videoModal {
+   z-index: 9999 !important;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   display: none;
+}
+
+#videoModal.show {
+   display: flex !important;
+   align-items: center;
+   justify-content: center;
+}
+
+#videoBackdrop {
+   z-index: 9998 !important;
+   background: rgba(0, 0, 0, 0.8);
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+#videoBackdrop.show {
+   display: block !important;
+}
+
+#videoModal .modal-dialog {
+   z-index: 10000 !important;
+   position: relative;
+   max-width: 90%;
+   margin: 0;
+}
+
+#videoModal .modal-content {
+   background: var(--bg-card);
+   border: 1px solid var(--border-color);
+   border-radius: 20px;
+   overflow: hidden;
+   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+   transform: scale(0.8);
+   opacity: 0;
+   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#videoModal.show .modal-content {
+   transform: scale(1);
+   opacity: 1;
+}
+
+#videoModal .modal-header {
+   background: var(--bg-secondary);
+   padding: 1.5rem 2rem 1rem;
+   position: relative;
+   z-index: 10001;
+}
+
+#videoModal .modal-title {
+   font-family: "JetBrains Mono", monospace;
+   font-weight: 700;
+   font-size: 1.3rem;
+   margin: 0;
+}
+
+#videoModal .btn-close {
+   background: var(--accent-primary);
+   border-radius: 50%;
+   opacity: 1;
+   width: 35px;
+   height: 35px;
+   background-image: none;
+   position: relative;
+   transition: all 0.3s ease;
+   border: none;
+   cursor: pointer;
+}
+
+#videoModal .btn-close:hover {
+   background: var(--accent-secondary);
+   transform: scale(1.1);
+}
+
+#videoModal .btn-close::before,
+#videoModal .btn-close::after {
+   content: "";
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 16px;
+   height: 2px;
+   background: white;
+   transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#videoModal .btn-close::after {
+   transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Video Container */
+.video-container {
+   position: relative;
+   width: 100%;
+   height: 0;
+   padding-bottom: 56.25%; /* Ratio 16:9 */
+   background: #000;
+}
+
+.video-container iframe {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   border: none;
+   z-index: 10000;
+}
+
+/* Loading State */
+.video-loading {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+   color: white;
+   z-index: 9999;
+}
+
+.video-loading.hidden {
+   display: none;
+}
+
+/* Video Info Section */
+.video-info {
+   padding: 2rem;
+   background: var(--bg-primary);
+   border-top: 1px solid var(--border-color);
+   position: relative;
+   z-index: 10001;
+}
+
+.video-info h6 {
+   color: var(--accent-primary);
+   font-weight: 600;
+   font-family: "JetBrains Mono", monospace;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+   #videoModal .modal-dialog {
+      max-width: 95%;
+      height: auto;
+   }
+
+   #videoModal .modal-header {
+      padding: 1rem 1.5rem 0.5rem;
+   }
+
+   #videoModal .modal-title {
+      font-size: 1.1rem;
+   }
+
+   .video-info {
+      padding: 1.5rem;
+   }
+
+   .video-info .row {
+      text-align: center;
+   }
+
+   .video-info .col-md-8 {
+      margin-bottom: 1rem;
+   }
+}
+
+/* Mode sombre */
+[data-theme="dark"] #videoModal .modal-content {
+   background: var(--bg-card);
+   border-color: var(--border-color);
+}
+
+[data-theme="dark"] #videoModal .modal-header {
+   background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .video-info {
+   background: var(--bg-primary);
+   border-color: var(--border-color);
+}
