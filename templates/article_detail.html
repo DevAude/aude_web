@@ -1,0 +1,477 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ article.titre }} - Blog Aude{% endblock %}
+
+{% block meta_description %}{{ article.meta_description }}{% endblock %}
+
+{% block extra_head %}
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ article.titre }}">
+<meta property="og:description" content="{{ article.resume }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ article.image_couverture.url }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="article:published_time" content="{{ article.date_publication|date:'c' }}">
+<meta property="article:modified_time" content="{{ article.date_modification|date:'c' }}">
+<meta property="article:author" content="{{ article.auteur }}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ article.titre }}">
+<meta name="twitter:description" content="{{ article.resume }}">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ article.image_couverture.url }}">
+
+<!-- Schema.org Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ article.titre }}",
+  "image": "{{ request.scheme }}://{{ request.get_host }}{{ article.image_couverture.url }}",
+  "datePublished": "{{ article.date_publication|date:'c' }}",
+  "dateModified": "{{ article.date_modification|date:'c' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.auteur }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Aude",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}"
+    }
+  },
+  "description": "{{ article.resume }}"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<section style="padding-top: 140px; padding-bottom: 20px; background: var(--bg-secondary);">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="text-decoration-none">Accueil</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'blog:article_list' %}" class="text-decoration-none">Blog</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'blog:categorie_detail' article.categorie.slug %}" class="text-decoration-none">
+                        {{ article.categorie.nom }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ article.titre|truncatewords:5 }}</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Article Header -->
+<section class="py-5" style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center scroll-reveal">
+                    <!-- Catégorie -->
+                    <a href="{% url 'blog:categorie_detail' article.categorie.slug %}"
+                       class="badge bg-primary mb-3 text-decoration-none"
+                       style="font-size: 0.875rem; padding: 0.5rem 1rem;">
+                        {% if article.categorie.icone %}
+                        <i class="bi {{ article.categorie.icone }} me-1"></i>
+                        {% endif %}
+                        {{ article.categorie.nom }}
+                    </a>
+
+                    <!-- Titre -->
+                    <h1 class="display-4 fw-bold mb-4" style="line-height: 1.2;">
+                        {{ article.titre }}
+                    </h1>
+
+                    <!-- Résumé -->
+                    <p class="lead text-secondary mb-4" style="font-size: 1.25rem;">
+                        {{ article.resume }}
+                    </p>
+
+                    <!-- Métadonnées -->
+                    <div class="d-flex justify-content-center align-items-center gap-4 flex-wrap text-muted">
+                        <div>
+                            <i class="bi bi-calendar3 me-2"></i>
+                            {{ article.date_publication|date:"d F Y" }}
+                        </div>
+                        <div>
+                            <i class="bi bi-clock me-2"></i>
+                            {{ article.temps_lecture }} min de lecture
+                        </div>
+                        <div>
+                            <i class="bi bi-eye me-2"></i>
+                            {{ article.vues }} vue{{ article.vues|pluralize }}
+                        </div>
+                    </div>
+
+                    <!-- Auteur -->
+                    {% if article.auteur %}
+                    <div class="mt-4 d-flex justify-content-center align-items-center gap-3">
+                        {% if article.auteur.photo %}
+                        <img
+                            src="{{ article.auteur.photo.url }}"
+                            alt="{{ article.auteur }}"
+                            class="rounded-circle"
+                            style="width: 56px; height: 56px; object-fit: cover; border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+                        >
+                        {% endif %}
+                        <div class="text-start">
+                            <div class="fw-bold">{{ article.auteur }}</div>
+                            {% if article.auteur.poste %}
+                            <div class="text-muted small">{{ article.auteur.poste }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Tags -->
+                    <div class="mt-4 d-flex justify-content-center gap-2 flex-wrap">
+                        {% for tag in article.tags.all %}
+                        <a href="{% url 'blog:tag_detail' tag.slug %}"
+                           class="badge-modern text-decoration-none"
+                           style="background-color: {{ tag.couleur }}20; color: {{ tag.couleur }}; font-size: 0.875rem;">
+                            #{{ tag.nom }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Article Content -->
+<article class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!-- Image de couverture -->
+                <div class="scroll-reveal mb-5">
+                    <img
+                        src="{{ article.image_couverture.url }}"
+                        alt="{{ article.image_alt|default:article.titre }}"
+                        class="img-fluid rounded-3 shadow-lg"
+                        style="width: 100%; max-height: 600px; object-fit: cover;"
+                    >
+                </div>
+
+                <!-- Barre de partage social (sticky) -->
+                <div class="d-none d-lg-block" style="position: sticky; top: 140px; float: left; margin-left: -80px;">
+                    <div class="d-flex flex-column gap-2">
+                        <!-- Partage Facebook -->
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                           target="_blank"
+                           class="btn btn-outline-primary rounded-circle p-2"
+                           style="width: 48px; height: 48px;"
+                           title="Partager sur Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+
+                        <!-- Partage Twitter -->
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ article.titre }}"
+                           target="_blank"
+                           class="btn btn-outline-info rounded-circle p-2"
+                           style="width: 48px; height: 48px;"
+                           title="Partager sur Twitter">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+
+                        <!-- Partage LinkedIn -->
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ article.titre }}"
+                           target="_blank"
+                           class="btn btn-outline-primary rounded-circle p-2"
+                           style="width: 48px; height: 48px;"
+                           title="Partager sur LinkedIn">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+
+                        <!-- Copier le lien -->
+                        <button
+                            onclick="copierLien()"
+                            class="btn btn-outline-secondary rounded-circle p-2"
+                            style="width: 48px; height: 48px;"
+                            title="Copier le lien">
+                            <i class="bi bi-link-45deg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contenu de l'article -->
+                <div class="article-content scroll-reveal" style="animation-delay: 0.1s;">
+                    {{ article.contenu|safe }}
+                </div>
+
+                <!-- Partage mobile (en bas) -->
+                <div class="d-lg-none mt-5 pt-4 border-top">
+                    <h5 class="mb-3">Partager cet article</h5>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                           target="_blank" class="btn btn-outline-primary">
+                            <i class="bi bi-facebook me-2"></i>Facebook
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ article.titre }}"
+                           target="_blank" class="btn btn-outline-info">
+                            <i class="bi bi-twitter me-2"></i>Twitter
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}"
+                           target="_blank" class="btn btn-outline-primary">
+                            <i class="bi bi-linkedin me-2"></i>LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Informations auteur (encadré) -->
+                {% if article.auteur %}
+                <div class="modern-card mt-5 p-4 scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="row align-items-center">
+                        {% if article.auteur.photo %}
+                        <div class="col-auto">
+                            <img
+                                src="{{ article.auteur.photo.url }}"
+                                alt="{{ article.auteur }}"
+                                class="rounded-circle"
+                                style="width: 80px; height: 80px; object-fit: cover;"
+                            >
+                        </div>
+                        {% endif %}
+                        <div class="col">
+                            <h5 class="mb-1">{{ article.auteur }}</h5>
+                            {% if article.auteur.poste %}
+                            <p class="text-muted mb-2">{{ article.auteur.poste }}</p>
+                            {% endif %}
+                            {% if article.auteur.bio %}
+                            <p class="mb-2">{{ article.auteur.bio }}</p>
+                            {% endif %}
+                            {% if article.auteur.linkedin or article.auteur.twitter %}
+                            <div class="d-flex gap-2">
+                                {% if article.auteur.linkedin %}
+                                <a href="{{ article.auteur.linkedin }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-linkedin"></i>
+                                </a>
+                                {% endif %}
+                                {% if article.auteur.twitter %}
+                                <a href="{{ article.auteur.twitter }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-twitter"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Navigation Article Précédent/Suivant -->
+{% if article_precedent or article_suivant %}
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                    {% if article_precedent %}
+                    <a href="{{ article_precedent.get_absolute_url }}"
+                       class="text-decoration-none d-flex align-items-center gap-2 flex-fill"
+                       style="max-width: 45%;">
+                        <i class="bi bi-arrow-left"></i>
+                        <div class="text-truncate">
+                            <small class="text-muted d-block">Article précédent</small>
+                            <strong>{{ article_precedent.titre }}</strong>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div style="max-width: 45%;"></div>
+                    {% endif %}
+
+                    {% if article_suivant %}
+                    <a href="{{ article_suivant.get_absolute_url }}"
+                       class="text-decoration-none d-flex align-items-center gap-2 flex-fill text-end"
+                       style="max-width: 45%;">
+                        <div class="text-truncate">
+                            <small class="text-muted d-block">Article suivant</small>
+                            <strong>{{ article_suivant.titre }}</strong>
+                        </div>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Articles liés -->
+{% if articles_lies %}
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h2 class="section-title text-gradient mb-5 scroll-reveal">Articles similaires</h2>
+
+                <div class="row g-4">
+                    {% for article_lie in articles_lies %}
+                    <div class="col-md-4">
+                        <div class="modern-card scroll-reveal" style="padding: 0; overflow: hidden; height: 100%;">
+                            <div style="height: 180px; overflow: hidden;">
+                                <img
+                                    src="{{ article_lie.image_couverture.url }}"
+                                    alt="{{ article_lie.titre }}"
+                                    style="width: 100%; height: 100%; object-fit: cover;"
+                                >
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <div class="text-muted small mb-2">
+                                    {{ article_lie.date_publication|date:"d M Y" }}
+                                </div>
+                                <h5 class="mb-2">
+                                    <a href="{{ article_lie.get_absolute_url }}" class="text-decoration-none text-dark">
+                                        {{ article_lie.titre|truncatewords:10 }}
+                                    </a>
+                                </h5>
+                                <p class="text-secondary small">{{ article_lie.resume|truncatewords:15 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="section-alt bg-gradient-primary">
+    <div class="container">
+        <div class="scroll-reveal text-center">
+            <h2 class="section-title text-white mb-4">Prêt à Transformer Votre Activité ?</h2>
+            <p class="lead text-white mb-5" style="opacity: 0.9;">
+                Rejoignez les +2500 professionnels qui utilisent Aude au quotidien.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="https://app.aude.ci"
+                   class="btn btn-primary-modern btn-lg"
+                   target="_blank"
+                   style="background: white; color: var(--accent-primary); border: none;">
+                    <span>
+                        <i class="bi bi-rocket-takeoff me-2"></i>Commencer gratuitement
+                    </span>
+                </a>
+                <a href="{% url 'blog:article_list' %}"
+                   class="btn btn-outline-modern btn-lg"
+                   style="border-color: white; color: white;">
+                    <span>
+                        <i class="bi bi-arrow-left me-2"></i>Retour au blog
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Style du contenu de l'article */
+    .article-content {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        color: var(--text-primary);
+    }
+
+    .article-content h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .article-content h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .article-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .article-content ul, .article-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    .article-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .article-content blockquote {
+        border-left: 4px solid var(--accent-primary);
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: var(--text-secondary);
+    }
+
+    .article-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        margin: 2rem 0;
+    }
+
+    .article-content code {
+        background-color: var(--bg-secondary);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+    .article-content pre {
+        background-color: var(--bg-secondary);
+        padding: 1.5rem;
+        border-radius: 12px;
+        overflow-x: auto;
+        margin: 2rem 0;
+    }
+
+    .article-content a {
+        color: var(--accent-primary);
+        text-decoration: underline;
+    }
+
+    .article-content a:hover {
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function copierLien() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Lien copié dans le presse-papier !');
+        });
+    }
+</script>
+{% endblock %}

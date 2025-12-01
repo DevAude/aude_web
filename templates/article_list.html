@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog Aude - Actualités & Innovation BTP{% endblock %}
+
+{% block meta_description %}
+Découvrez les dernières actualités, innovations et success stories du BTP digital. Articles approfondis sur l'intelligence artificielle, la transformation numérique et les meilleures pratiques.
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="padding-top: 140px; padding-bottom: 60px; background: var(--bg-primary);">
+    <div class="container">
+        <div class="text-center scroll-reveal">
+            <h1 class="section-title text-gradient mb-4">Blog Aude</h1>
+            <p class="section-subtitle">Actualités, innovations et success stories du BTP digital.</p>
+
+            <!-- Barre de recherche optionnelle -->
+            <div class="mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                <form method="get" action="{% url 'blog:article_list' %}" class="d-flex gap-2">
+                    <input
+                        type="search"
+                        name="q"
+                        class="form-control"
+                        placeholder="Rechercher un article..."
+                        value="{{ recherche|default:'' }}"
+                        style="border-radius: 12px; padding: 12px 20px;"
+                    >
+                    <button type="submit" class="btn btn-primary-modern">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filtres par catégorie -->
+{% if categories %}
+<section class="py-4" style="background: var(--bg-secondary);">
+    <div class="container">
+        <div class="d-flex gap-2 justify-content-center flex-wrap">
+            <a href="{% url 'blog:article_list' %}"
+               class="badge-modern {% if not categorie_active %}active{% endif %}">
+                Tous
+            </a>
+            {% for categorie in categories %}
+            <a href="{% url 'blog:article_list' %}?categorie={{ categorie.slug }}"
+               class="badge-modern {% if categorie_active == categorie.slug %}active{% endif %}">
+                {% if categorie.icone %}<i class="bi {{ categorie.icone }} me-1"></i>{% endif %}
+                {{ categorie.nom }}
+                <span class="ms-1 text-muted small">({{ categorie.nb_articles }})</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Articles Section -->
+<section class="section" id="blog">
+    <div class="container">
+
+        <!-- Article en vedette (si disponible) -->
+        {% if article_vedette and not categorie_active and not tag_actif and not recherche %}
+        <div class="mb-5">
+            <div class="scroll-reveal">
+                <span class="badge bg-warning text-dark mb-3">
+                    <i class="bi bi-star-fill me-1"></i>Article en vedette
+                </span>
+            </div>
+
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="scroll-reveal">
+                        <img
+                            src="{{ article_vedette.image_couverture.url }}"
+                            alt="{{ article_vedette.image_alt|default:article_vedette.titre }}"
+                            class="img-fluid rounded-3 shadow"
+                            style="width: 100%; height: 400px; object-fit: cover;"
+                        >
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="scroll-reveal" style="animation-delay: 0.1s;">
+                        <div class="text-muted small mb-2">
+                            {{ article_vedette.date_publication|date:"d F Y" }} •
+                            {{ article_vedette.temps_lecture }} min de lecture
+                        </div>
+                        <h2 class="mb-3">{{ article_vedette.titre }}</h2>
+                        <p class="text-secondary mb-4">{{ article_vedette.resume }}</p>
+
+                        <div class="d-flex gap-2 mb-4 flex-wrap">
+                            {% for tag in article_vedette.tags.all|slice:":3" %}
+                            <span class="badge-modern" style="background-color: {{ tag.couleur }}20; color: {{ tag.couleur }};">
+                                {{ tag.nom }}
+                            </span>
+                            {% endfor %}
+                        </div>
+
+                        <a href="{{ article_vedette.get_absolute_url }}" class="btn btn-primary-modern">
+                            <span>Lire l'article complet</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5">
+        {% endif %}
+
+        <!-- Titre de section -->
+        <div class="scroll-reveal mb-5">
+            <h2 class="section-title text-gradient">
+                {% if categorie_obj %}
+                    Articles - {{ categorie_obj.nom }}
+                {% elif tag_actif %}
+                    Articles - #{{ tag_actif }}
+                {% elif recherche %}
+                    Résultats pour "{{ recherche }}"
+                {% else %}
+                    Derniers Articles
+                {% endif %}
+            </h2>
+            <p class="section-subtitle">
+                {{ articles.paginator.count }} article{{ articles.paginator.count|pluralize }}
+            </p>
+        </div>
+
+        <!-- Grille d'articles -->
+        {% if articles %}
+        <div class="row g-4">
+            {% for article in articles %}
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card scroll-reveal"
+                     style="padding: 0; overflow: hidden; animation-delay: {{ forloop.counter0|add:1|divisibleby:10|yesno:'0.1s,0.2s,0.3s' }};">
+
+                    <!-- Image de couverture -->
+                    <div style="height: 200px; overflow: hidden; position: relative;">
+                        <img
+                            src="{{ article.image_couverture.url }}"
+                            alt="{{ article.image_alt|default:article.titre }}"
+                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
+                            onmouseover="this.style.transform='scale(1.05)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        >
+
+                        <!-- Badge catégorie en overlay -->
+                        <span class="badge position-absolute top-0 start-0 m-3"
+                              style="background-color: var(--accent-primary);">
+                            {{ article.categorie.nom }}
+                        </span>
+                    </div>
+
+                    <div style="padding: 2rem;">
+                        <!-- Métadonnées -->
+                        <div class="text-muted small mb-2">
+                            {{ article.date_publication|date:"d M Y" }} •
+                            {{ article.temps_lecture }} min de lecture
+                            {% if article.vues > 0 %}
+                                • {{ article.vues }} vue{{ article.vues|pluralize }}
+                            {% endif %}
+                        </div>
+
+                        <!-- Titre -->
+                        <h4 class="mb-3">
+                            <a href="{{ article.get_absolute_url }}"
+                               class="text-decoration-none text-dark"
+                               style="transition: color 0.3s;"
+                               onmouseover="this.style.color='var(--accent-primary)'"
+                               onmouseout="this.style.color=''">
+                                {{ article.titre }}
+                            </a>
+                        </h4>
+
+                        <!-- Résumé -->
+                        <p class="text-secondary mb-3">{{ article.resume|truncatewords:20 }}</p>
+
+                        <!-- Tags -->
+                        <div class="d-flex gap-2 mb-3 flex-wrap">
+                            {% for tag in article.tags.all|slice:":2" %}
+                            <a href="{% url 'blog:tag_detail' tag.slug %}"
+                               class="badge-modern text-decoration-none"
+                               style="background-color: {{ tag.couleur }}20; color: {{ tag.couleur }};">
+                                {{ tag.nom }}
+                            </a>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Bouton CTA -->
+                        <a href="{{ article.get_absolute_url }}" class="btn btn-outline-modern btn-sm">
+                            <span>Lire l'article</span>
+                        </a>
+
+                        <!-- Auteur (optionnel) -->
+                        {% if article.auteur %}
+                        <div class="mt-3 pt-3 border-top d-flex align-items-center gap-2">
+                            {% if article.auteur.photo %}
+                            <img
+                                src="{{ article.auteur.photo.url }}"
+                                alt="{{ article.auteur }}"
+                                class="rounded-circle"
+                                style="width: 32px; height: 32px; object-fit: cover;"
+                            >
+                            {% endif %}
+                            <small class="text-muted">
+                                Par <strong>{{ article.auteur }}</strong>
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if articles.has_other_pages %}
+        <nav aria-label="Navigation des articles" class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if articles.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ articles.previous_page_number }}{% if categorie_active %}&categorie={{ categorie_active }}{% endif %}{% if tag_actif %}&tag={{ tag_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i> Précédent
+                    </a>
+                </li>
+                {% endif %}
+
+                {% for num in articles.paginator.page_range %}
+                    {% if articles.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > articles.number|add:'-3' and num < articles.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if categorie_active %}&categorie={{ categorie_active }}{% endif %}{% if tag_actif %}&tag={{ tag_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}">
+                            {{ num }}
+                        </a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if articles.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ articles.next_page_number }}{% if categorie_active %}&categorie={{ categorie_active }}{% endif %}{% if tag_actif %}&tag={{ tag_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}">
+                        Suivant <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <!-- Aucun article trouvé -->
+        <div class="text-center py-5">
+            <i class="bi bi-inbox" style="font-size: 4rem; color: var(--text-muted);"></i>
+            <h3 class="mt-3">Aucun article trouvé</h3>
+            <p class="text-muted">
+                {% if recherche %}
+                    Aucun résultat pour "{{ recherche }}". Essayez avec d'autres mots-clés.
+                {% else %}
+                    Revenez bientôt pour découvrir nos nouveaux contenus !
+                {% endif %}
+            </p>
+            {% if categorie_active or tag_actif or recherche %}
+            <a href="{% url 'blog:article_list' %}" class="btn btn-primary-modern mt-3">
+                <span>Voir tous les articles</span>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-alt bg-gradient-primary">
+    <div class="container">
+        <div class="scroll-reveal text-center">
+            <h2 class="section-title text-white mb-4">Rejoignez Nos Clients Satisfaits</h2>
+            <p class="lead text-white mb-5" style="opacity: 0.9;">
+                Découvrez pourquoi +2500 professionnels nous font confiance.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="https://app.aude.ci"
+                   class="btn btn-primary-modern btn-lg"
+                   target="_blank"
+                   style="background: white; color: var(--accent-primary); border: none;">
+                    <span>
+                        <i class="bi bi-rocket-takeoff me-2"></i>Commencer gratuitement
+                    </span>
+                </a>
+                <a href="{% url 'contact' %}"
+                   class="btn btn-outline-modern btn-lg"
+                   style="border-color: white; color: white;">
+                    <span>
+                        <i class="bi bi-envelope me-2"></i>Nous contacter
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .badge-modern {
+        transition: all 0.3s ease;
+    }
+
+    .badge-modern.active {
+        background-color: var(--accent-primary) !important;
+        color: white !important;
+        transform: scale(1.05);
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--accent-primary);
+        border-color: var(--accent-primary);
+    }
+
+    .page-link {
+        color: var(--accent-primary);
+        border-radius: 8px;
+        margin: 0 4px;
+    }
+
+    .page-link:hover {
+        background-color: var(--accent-primary);
+        color: white;
+    }
+</style>
+{% endblock %}
