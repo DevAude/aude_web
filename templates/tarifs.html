@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load pricing_filters %}
+
+{% block content %}
+
+<!-- Tarifs Section -->
+<section class="section" id="tarifs">
+    <div class="container">
+        <div class="scroll-reveal">
+            <h2 class="section-title text-gradient">Nos Tarifs</h2>
+            <p class="section-subtitle">
+                Choisissez la formule qui correspond à vos besoins. Tous nos plans incluent un essai gratuit
+                de 30 jours et des économies importantes sur les abonnements longs.
+            </p>
+        </div>
+
+        <!-- Tabs de sélection de période -->
+        <div class="pricing-tabs scroll-reveal">
+            <ul class="nav nav-tabs" id="pricingTabs" role="tablist">
+                {% for period_choice in period_choices %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if forloop.first %}active{% endif %}"
+                            id="{{ period_choice.0 }}-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#{{ period_choice.0 }}"
+                            type="button"
+                            role="tab">
+                        <i class="bi {{ period_choice.0|get_period_icon }} me-2"></i>
+                        {{ period_choice.1 }}
+                        {% if period_choice.2 > 0 %}
+                        <span class="savings-badge">-{{ period_choice.2 }}%</span>
+                        {% endif %}
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Contenu des tabs -->
+        <div class="tab-content" id="pricingTabsContent">
+            {% for period_choice in period_choices %}
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}"
+                 id="{{ period_choice.0 }}"
+                 role="tabpanel">
+                <div class="row g-4 justify-content-center">
+                    {% for plan in plans %}
+                    {% if plan.period == period_choice.0 %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="pricing-card {% if plan.is_featured %}featured{% endif %} scroll-reveal"
+                             style="animation-delay: {% animation_delay forloop.counter0 %};">
+
+                            <!-- Badge "En vedette" -->
+                            {% if plan.is_featured and plan.featured_badge %}
+                            <div class="pricing-badge">{{ plan.featured_badge }}</div>
+                            {% endif %}
+
+                            <div class="card-body">
+                                <!-- Nom du plan -->
+                                <h3 class="mt-4 mb-2" style="color: var(--accent-primary); font-weight: 700;">
+                                    {{ plan.get_plan_type_display }}
+                                </h3>
+
+                                <!-- Prix -->
+                                {% if plan.price_eur > 0 %}
+                                <div class="price">{{ plan.price_cfa|format_price }}F</div>
+                                <p class="text-secondary mb-4">
+                                    par utilisateur / {{ plan.get_period_display|lower_first }}
+                                </p>
+                                {% else %}
+                                <div class="price" style="font-size: 2.5rem;">Sur Devis</div>
+                                <br>
+                                <p class="text-secondary mb-4">Solution sur mesure</p>
+                                {% endif %}
+
+                                <!-- Fonctionnalités -->
+                                <ul class="pricing-features">
+                                    {% for feature in plan.features.all %}
+                                    <li {% if feature.is_bold %}style="font-weight: bold;"{% endif %}>
+                                        {% if feature.is_bold %}
+                                        <strong>{{ feature.feature_text }}</strong>
+                                        {% else %}
+                                        {{ feature.feature_text }}
+                                        {% endif %}
+                                    </li>
+                                    {% empty %}
+                                    <li class="text-muted">Aucune fonctionnalité définie</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <!-- Bouton d'action -->
+                            <div class="card-footer">
+                                <a href="{{ plan.action_url }}"
+                                   class="btn w-100 {% if plan.is_featured %}btn-primary-modern{% else %}btn-outline-modern{% endif %} px-4"
+                                   {% if 'http' in plan.action_url %}target="_blank"{% endif %}>
+                                    <span>{{ plan.action_text }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% empty %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">Aucun plan tarifaire disponible pour le moment.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section section-alt" id="faq">
+    <div class="container">
+        <div class="scroll-reveal">
+            <h2 class="section-title text-gradient">Questions Fréquentes</h2>
+            <p class="section-subtitle">
+                Trouvez rapidement les réponses aux questions les plus posées sur Aude.
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="scroll-reveal">
+                    {% for faq in faqs %}
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <i class="{{ faq.icon_class }} me-3 text-primary"></i>
+                            {{ faq.question }}
+                        </button>
+                        <div class="faq-answer">
+                            {{ faq.answer }}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center text-muted">Aucune question fréquente disponible.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+{% if cta %}
+<section class="section-alt bg-gradient-primary">
+    <div class="container">
+        <div class="scroll-reveal text-center">
+            <h2 class="section-title text-white mb-4">
+                {{ cta.title }}
+            </h2>
+            <p class="lead text-white mb-5" style="opacity: 0.9;">
+                {{ cta.subtitle }}
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap mb-4">
+                <!-- Bouton principal -->
+                <a href="{{ cta.primary_url }}"
+                   class="btn btn-primary-modern btn-lg pulse"
+                   {% if 'http' in cta.primary_url %}target="_blank"{% endif %}
+                   style="background: white; color: var(--accent-primary); border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <span>
+                        {% if cta.primary_icon %}<i class="{{ cta.primary_icon }} me-2"></i>{% endif %}
+                        {{ cta.primary_text }}
+                    </span>
+                </a>
+
+                <!-- Bouton secondaire -->
+                <a href="{{ cta.secondary_url }}"
+                   class="btn btn-outline-modern btn-lg"
+                   style="border-color: white; color: white;">
+                    <span>
+                        {% if cta.secondary_icon %}<i class="{{ cta.secondary_icon }} me-2"></i>{% endif %}
+                        {{ cta.secondary_text }}
+                    </span>
+                </a>
+            </div>
+
+            <!-- Points de réassurance -->
+            <p class="text-white mb-0" style="opacity: 0.8;">
+                <i class="{{ cta.highlight_1_icon }} me-1"></i><strong>{{ cta.highlight_1 }}</strong> •
+                <i class="{{ cta.highlight_2_icon }} me-1"></i><strong>{{ cta.highlight_2 }}</strong> •
+                <i class="{{ cta.highlight_3_icon }} me-1"></i><strong>{{ cta.highlight_3 }}</strong>
+            </p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

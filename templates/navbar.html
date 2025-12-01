@@ -1,0 +1,30 @@
+{% load static %}
+
+
+
+<!-- Header -->
+    <nav class="container navbar navbar-expand-lg fixed-top" style="top: 10px; border-radius: 20px; padding: 10px; background:rgba(248, 249, 250, 0.56) !important;">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="{% static 'images/logo.png' %}" style="width:100px" alt="Logo Aude">
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list" style="color: var(--text-primary); font-size: 1.5rem;"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">À Propos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'solutions' %}">Solutions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'tarifs' %}">Tarifs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+                </ul>
+                <a href="https://app.aude.ci" target="_blank" class="btn btn-primary-modern d-none d-lg-inline-flex">
+                    <span>Essai gratuit 30 jours</span>
+                </a>
+            </div>
+        </div>
+    </nav>

@@ -1,0 +1,231 @@
+
+{% extends 'base.html'%}
+{% load static %}
+
+{%block content %}
+
+<!-- Hero Section -->
+{% with hero=hero_section %}
+
+<section class="hero bg-gradient-hero" id="accueil">
+
+    <!-- SVG Background identique -->
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
+        <defs>
+            <linearGradient id="gradient-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#0f0c29;" />
+                <stop offset="50%" style="stop-color:#302b63;" />
+                <stop offset="100%" style="stop-color:#24243e;" />
+            </linearGradient>
+            <pattern id="pattern-grid" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                <circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.1)"/>
+                <circle cx="0" cy="0" r="1.5" fill="rgba(255,255,255,0.1)"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#gradient-hero)" />
+        <rect width="100%" height="100%" fill="url(#pattern-grid)" />
+    </svg>
+
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- LEFT SIDE -->
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <div class="mb-3">
+                        <span class="badge-modern">{{ hero.badge }}</span>
+                    </div>
+
+                    <h1 class="fade-in-up">
+                        <span class="text-gradient">{{ hero.title_part1 }}</span>
+                        {{ hero.title_part2 }}
+                    </h1>
+
+                    <p class="lead fade-in-up" style="animation-delay: 0.2s;">
+                        {{ hero.description }}
+                    </p>
+
+                    <div class="fade-in-up" style="animation-delay: 0.4s;">
+                        <a href="{{ hero.primary_button_url }}" target="_blank"
+                           class="btn btn-primary-modern btn-lg me-3 mb-3 pulse">
+                            <span><i class="bi bi-rocket-takeoff me-2"></i>{{ hero.primary_button_text }}</span>
+                        </a>
+
+                        <a href="#" class="btn btn-outline-modern btn-lg mb-3"
+                           data-bs-toggle="modal" data-bs-target="{{ hero.secondary_button_modal_target }}">
+                            <span><i class="bi bi-play-circle me-2"></i>{{ hero.secondary_button_text }}</span>
+                        </a>
+                    </div>
+
+                    <div class="mt-4 fade-in-up" style="animation-delay: 0.6s;">
+                        <small class="text-muted font-mono">
+                            ✓ 30 jours gratuits • ✓ Sans engagement • ✓ Support dédié
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="col-lg-6">
+                <div class="text-center fade-in-right" style="animation-delay: 0.3s;">
+                    <img src="{% static 'images/hero.png' %}" alt="Interface Aude Dashboard" class="hero-image img-fluid">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endwith %}
+
+
+    <!-- Stats Section -->
+    <section class="section bg-gradient-primary">
+    <div class="container">
+        <div class="stats-grid">
+
+            {% for stat in stats %}
+            <div class="stat-item scroll-reveal"
+                 style="animation-delay: {{ stat.animation_delay }}s;
+                        background: rgba(255,255,255,0.1);
+                        border-color: rgba(255,255,255,0.2);">
+
+                <span class="stat-number" style="color: white;">
+                    {{ stat.number|safe }}
+                </span>
+
+                <div class="stat-label" style="color: rgba(255,255,255,0.8);">
+                    {{ stat.label }}
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+    <!-- Avantages Section -->
+    <section class="section section-alt">
+    <div class="container">
+        <div class="scroll-reveal">
+            <h2 class="section-title text-gradient">Les Avantages Révolutionnaires d'Aude</h2>
+            <p class="section-subtitle">
+                Découvrez pourquoi Aude est bien plus qu'un simple logiciel :
+                c'est votre partenaire stratégique qui transforme radicalement votre façon de travailler.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            {% for adv in advantages %}
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card scroll-reveal"
+                     style="animation-delay: {{ adv.animation_delay }}s;">
+
+                    <div class="text-center mb-3">
+                        <i class="{{ adv.icon }}"
+                           style="font-size: 3rem; color: {{ adv.icon_color }};"></i>
+                    </div>
+
+                    <h4 class="mb-3">{{ adv.title }}</h4>
+
+                    <p class="text-secondary">{{ adv.description }}</p>
+
+                    {% if adv.footer_text %}
+                    <div class="mt-3">
+                        <small class="text-muted font-mono">{{ adv.footer_text }}</small>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+    {% for cta in ctas %}
+<section class="section-alt bg-gradient-primary" id="cta">
+    <div class="container">
+        <div class="scroll-reveal text-center">
+            <h2 class="section-title text-white mb-4">
+                {{ cta.title }}
+            </h2>
+            <p class="lead text-white mb-5" style="opacity: 0.9;">
+                {{ cta.subtitle }}
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap mb-4">
+                <a href="{{ cta.primary_button_url }}" class="btn btn-primary-modern btn-lg pulse" target="_blank"
+                   style="background: white; color: var(--accent-primary); border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <span>{{ cta.primary_button_text }}</span>
+                </a>
+
+                {% if cta.secondary_button_text %}
+                <a href="{{ cta.secondary_button_url }}" class="btn btn-outline-modern btn-lg"
+                   style="border-color: white; color: white;">
+                    <span>{{ cta.secondary_button_text }}</span>
+                </a>
+                {% endif %}
+            </div>
+
+            <p class="text-white mb-0" style="opacity: 0.8;">
+                <strong>{{ cta.badge_1 }}</strong> •
+                <strong>{{ cta.badge_2 }}</strong> •
+                <strong>{{ cta.badge_3 }}</strong>
+            </p>
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="videoModalLabel">
+                        <i class="bi bi-play-circle-fill me-2"></i>Découvrez Aude en action
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="youtubeVideo"
+                                src=""
+                                title="Démonstration Aude - Logiciel BTP et Architecture"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="mb-2">🎯 Ce que vous découvrirez :</h6>
+                                <ul class="list-unstyled small text-secondary">
+                                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Interface utilisateur intuitive</li>
+                                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Création de devis en 3 clics</li>
+                                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Gestion de projet simplifiée</li>
+                                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Tableau de bord temps réel</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <a href="#cta" class="btn btn-primary w-100 mb-2" data-bs-dismiss="modal">
+                                    <span><i class="bi bi-rocket-takeoff me-2"></i>Démarrer l'essai gratuit</span>
+                                </a>
+                                <small class="text-muted">30 jours • Sans engagement</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}

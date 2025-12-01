@@ -1,0 +1,148 @@
+{% extends 'base.html'%}
+{% block content %}
+    <section class="hero" style="padding-top: 140px; padding-bottom: 60px; background: var(--bg-primary);">
+        <div class="container">
+            <div class="text-center scroll-reveal">
+                <h1 class="section-title text-gradient mb-4">Blog Aude</h1>
+                <p class="section-subtitle">Actualités, innovations et success stories du BTP digital.</p>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="blog">
+        <div class="container">
+            <div class="scroll-reveal">
+                <h2 class="section-title text-gradient">Blog Aude - Actualités & Innovation</h2>
+                <p class="section-subtitle">Restez à la pointe de l'innovation avec nos articles approfondis sur le BTP numérique.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-card scroll-reveal" style="padding: 0; overflow: hidden;">
+                        <div style="height: 200px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-robot" style="font-size: 4rem; color: white;"></i>
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div class="text-muted small mb-2">15 Mai 2025 • 8 min de lecture</div>
+                            <h4 class="mb-3">L'Intelligence Révolutionne le BTP</h4>
+                            <p class="text-secondary mb-3">Découvrez comment l'IA transforme l'industrie de la construction.</p>
+                            <div class="d-flex gap-2 mb-3">
+                                <span class="badge-modern">IA</span>
+                                <span class="badge-modern">Innovation</span>
+                            </div>
+                            <a href="#" class="btn btn-outline-modern btn-sm"><span>Lire l'article</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-card scroll-reveal" style="animation-delay: 0.1s; padding: 0; overflow: hidden;">
+                        <div style="height: 200px; background: linear-gradient(135deg, #10b981, #34d399); display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-graph-up-arrow" style="font-size: 4rem; color: white;"></i>
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div class="text-muted small mb-2">10 Mai 2025 • 12 min</div>
+                            <h4 class="mb-3">ROI Spectaculaire : +40% de Rentabilité</h4>
+                            <p class="text-secondary mb-3">Étude de cas sur l'impact financier d'Aude.</p>
+                            <div class="d-flex gap-2 mb-3">
+                                <span class="badge-modern">ROI</span>
+                                <span class="badge-modern">Étude</span>
+                            </div>
+                            <a href="#" class="btn btn-outline-modern btn-sm"><span>Lire l'étude</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-card scroll-reveal" style="animation-delay: 0.2s; padding: 0; overflow: hidden;">
+                        <div style="height: 200px; background: linear-gradient(135deg, #8b5cf6, #a78bfa); display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-leaf-fill" style="font-size: 4rem; color: white;"></i>
+                        </div>
+                        <div style="padding: 2rem;">
+                            <div class="text-muted small mb-2">5 Mai 2025 • 10 min</div>
+                            <h4 class="mb-3">BTP Vert : Construction Durable</h4>
+                            <p class="text-secondary mb-3">La technologie au service de l'écologie.</p>
+                            <div class="d-flex gap-2 mb-3">
+                                <span class="badge-modern">Écologie</span>
+                                <span class="badge-modern">Durable</span>
+                            </div>
+                            <a href="#" class="btn btn-outline-modern btn-sm"><span>Découvrir</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section section-alt" id="testimonials">
+        <div class="container">
+            <div class="scroll-reveal">
+                <h2 class="section-title text-gradient">Ce que disent nos clients</h2>
+                <p class="section-subtitle">Découvrez les retours de professionnels qui ont testé Aude.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="modern-card scroll-reveal">
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://via.placeholder.com/60x60/5869b1/FFFFFF?text=JM" alt="Jean Martin" class="rounded-circle me-3" style="width:60px;height:60px;">
+                                <div>
+                                    <h5 class="mb-1">Jean Martin</h5>
+                                    <small class="text-secondary">CEO, Martin Construction</small>
+                                </div>
+                            </div>
+                            <p class="text-secondary mb-3" style="font-style: italic;">"Nous avons testé Aude et les résultats sont très prometteurs !"</p>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="badge-modern">Interface intuitive</span>
+                                <span class="badge-modern">Gain de temps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="modern-card scroll-reveal" style="animation-delay: 0.1s;">
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://via.placeholder.com/60x60/EC4899/FFFFFF?text=SD" alt="Sophie Dubois" class="rounded-circle me-3" style="width:60px;height:60px;">
+                                <div>
+                                    <h5 class="mb-1">Sophie Dubois</h5>
+                                    <small class="text-secondary">Architecte DPLG</small>
+                                </div>
+                            </div>
+                            <p class="text-secondary mb-3" style="font-style: italic;">"J'ai participé aux tests d'Aude. La simplicité d'utilisation est impressionnante."</p>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="badge-modern">Simple</span>
+                                <span class="badge-modern">Adapté</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="modern-card scroll-reveal" style="animation-delay: 0.2s;">
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://via.placeholder.com/60x60/10B981/FFFFFF?text=AL" alt="Antoine Laurent" class="rounded-circle me-3" style="width:60px;height:60px;">
+                                <div>
+                                    <h5 class="mb-1">Antoine Laurent</h5>
+                                    <small class="text-secondary">Directeur Technique</small>
+                                </div>
+                            </div>
+                            <p class="text-secondary mb-3" style="font-style: italic;">"Les fonctionnalités correspondent exactement à nos besoins terrain."</p>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="badge-modern">Besoins terrain</span>
+                                <span class="badge-modern">Équipe experte</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-alt bg-gradient-primary">
+        <div class="container">
+            <div class="scroll-reveal text-center">
+                <h2 class="section-title text-white mb-4">Rejoignez Nos Clients Satisfaits</h2>
+                <p class="lead text-white mb-5" style="opacity: 0.9;">Découvrez pourquoi +2500 professionnels nous font confiance.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="https://app.aude.ci" class="btn btn-primary-modern btn-lg" target="_blank" style="background: white; color: var(--accent-primary); border: none;"><span><i class="bi bi-rocket-takeoff me-2"></i>Commencer gratuitement</span></a>
+                    <a href="contact.html" class="btn btn-outline-modern btn-lg" style="border-color: white; color: white;"><span><i class="bi bi-envelope me-2"></i>Nous contacter</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}

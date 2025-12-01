@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Section À Propos -->
+<section class="section-alt" id="apropos">
+    <div class="container">
+
+        <!-- HERO (Mission / Vision / Histoire) -->
+        <div class="scroll-reveal">
+
+            <h2 class="section-title text-gradient">
+                {{ hero.title }}
+            </h2>
+
+            {% if hero.subtitle %}
+            <p class="section-subtitle">
+                {{ hero.subtitle }}
+            </p>
+            {% endif %}
+
+        </div>
+
+        <div class="row align-items-center g-5">
+
+            <!-- Text content -->
+            <div class="col-lg-6">
+                <div class="scroll-reveal fade-in-left">
+
+                    <h3 class="mb-3" style="color: var(--text-accent);">
+                        {{ hero.story_title }}
+                    </h3>
+                    <p class="text-secondary mb-4" style="line-height: 1.8;">
+                        {{ hero.story_text }}
+                    </p>
+
+                    <h3 class="mb-3" style="color: var(--text-accent);">
+                        {{ hero.vision_title }}
+                    </h3>
+                    <p class="text-secondary mb-4" style="line-height: 1.8;">
+                        {{ hero.vision_text }}
+                    </p>
+
+                    {% if hero.button_text and hero.button_url %}
+                    <a href="{{ hero.button_url }}" class="btn btn-primary-modern">
+                        <span><i class="bi bi-chat-dots-fill me-2"></i>{{ hero.button_text }}</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="col-lg-6">
+                <div class="scroll-reveal fade-in-right text-center">
+
+                    {% if hero.image %}
+                    <img src="{{ hero.image.url }}"
+                         alt="{{ hero.title }}"
+                         class="img-fluid rounded-3 shadow-lg hero-image"
+                         style="object-fit: cover; border: 1px solid rgba(255,255,255,0.1);">
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- PILLARS -->
+        <div class="row g-4 mt-5 justify-content-center">
+
+            <div class="col-lg-10 text-center scroll-reveal" style="animation-delay: 0.2s;">
+                <h3 class="mb-4"
+                    style="font-family: 'JetBrains Mono', monospace; color: var(--text-primary);">
+                    Nos Piliers Fondamentaux
+                </h3>
+            </div>
+
+            {% for pillar in pillars %}
+            <div class="col-lg-3 col-md-6">
+                <div class="modern-card text-center scroll-reveal"
+                     style="animation-delay: {{ forloop.counter0|add:"0.3"|floatformat:1 }}s;">
+
+                    <div class="feature-icon mx-auto"
+                         style="background: {{ pillar.accent_color }}">
+                        <i class="bi {{ pillar.icon }}"></i>
+                    </div>
+
+                    <h5 class="mt-3 mb-2 fw-bold" style="color: var(--text-primary);">
+                        {{ pillar.title }}
+                    </h5>
+
+                    <p class="text-secondary small">
+                        {{ pillar.text }}
+                    </p>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- STATS SECTION -->
+<section class="section bg-gradient-primary">
+    <div class="container">
+
+        <div class="text-center mb-5 scroll-reveal">
+            <h2 class="section-title text-white">Aude en Chiffres</h2>
+            <p class="text-white" style="opacity: 0.9;">Des résultats concrets qui parlent d'eux-mêmes</p>
+        </div>
+
+        <div class="stats-grid">
+
+            {% for stat in stats %}
+            <div class="stat-item scroll-reveal"
+                 style="animation-delay: {{ forloop.counter0|add:"0.0"|floatformat:1 }}s;
+                        background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+
+                <span class="stat-number counter"
+                      data-target="{{ stat.number }}"
+                      style="color: white;">0</span>
+
+                <div class="stat-label"
+                     style="color: rgba(255,255,255,0.8);">
+                    {{ stat.label }}
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- CTA SECTION -->
+{% if cta %}
+<section class="section-alt">
+    <div class="container">
+
+        <div class="scroll-reveal text-center">
+
+            <h2 class="section-title text-gradient mb-4">
+                {{ cta.title }}
+            </h2>
+
+            {% if cta.subtitle %}
+            <p class="lead text-secondary mb-5">
+                {{ cta.subtitle }}
+            </p>
+            {% endif %}
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+                {% if cta.primary_button_text and cta.primary_button_url %}
+                <a href="{{ cta.primary_button_url }}"
+                   class="btn btn-primary-modern btn-lg"
+                   target="_blank">
+                    <span><i class="bi bi-rocket-takeoff me-2"></i>{{ cta.primary_button_text }}</span>
+                </a>
+                {% endif %}
+
+                {% if cta.secondary_button_text and cta.secondary_button_url %}
+                <a href="{{ cta.secondary_button_url }}"
+                   class="btn btn-outline-modern btn-lg">
+                    <span><i class="bi bi-envelope me-2"></i>{{ cta.secondary_button_text }}</span>
+                </a>
+                {% endif %}
+
+            </div>
+
+            <p class="mt-4 text-muted mb-0">
+
+                {% if cta.badge_1 %}
+                <i class="bi bi-shield-lock me-1"></i><strong>{{ cta.badge_1 }}</strong> •
+                {% endif %}
+
+                {% if cta.badge_2 %}
+                <i class="bi bi-credit-card-2-front-fill me-1"></i><strong>{{ cta.badge_2 }}</strong> •
+                {% endif %}
+
+                {% if cta.badge_3 %}
+                <i class="bi bi-headset me-1"></i><strong>{{ cta.badge_3 }}</strong>
+                {% endif %}
+
+            </p>
+
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil | Aude - Logiciel SaaS pour professionnels du BTP et Architecture</title>
+    <meta name="description" content="Aude simplifie la gestion de vos projets BTP et architecture. Devis, planning, budgets, équipes : tout centralisé. Essai gratuit 30 jours.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://via.placeholder.com/32x32/5869b1/FFFFFF?text=A" type="image/png">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()" title="Changer le thème">
+        <i class="bi bi-sun-fill light-icon" id="light-icon"></i>
+        <i class="bi bi-moon-fill dark-icon" id="dark-icon" style="display: none;"></i>
+    </div>
+
+    <!-- WhatsApp Button -->
+    <div class="whatsapp-button" onclick="openWhatsApp()" title="Contactez-nous sur WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+        <div class="whatsapp-tooltip">
+            <span>Besoin d'aide ? Écrivez-nous !</span>
+        </div>
+    </div>
+
+    {%include 'navbar.html'%}
+
+    {%block content%}
+    {%endblock%}
+
+    {%include 'footer.html'%}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+
+    {% extends 'base.html'%}
+{% block content %}
+    <section class="hero" style="padding-top: 140px; padding-bottom: 60px; background: var(--bg-primary);">
+        <div class="container">
+            <div class="text-center scroll-reveal">
+                <h1 class="section-title text-gradient mb-4">Contactez-Nous</h1>
+                <p class="section-subtitle">Notre équipe est à votre écoute pour répondre à toutes vos questions et vous accompagner dans votre projet de digitalisation.</p>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="contact-form">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="scroll-reveal">
+                        <h2 class="mb-4" style="color: var(--text-primary);">Envoyez-nous un Message</h2>
+                        <p class="text-secondary mb-5">Remplissez le formulaire ci-dessous et notre équipe vous répondra dans les plus brefs délais. Nous sommes là pour vous aider !</p>
+                        <div class="modern-card" style="background: var(--bg-secondary); border: 2px solid var(--border-color);">
+                            <div id="contactSuccessMessage" class="alert alert-success d-none" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i><strong>Message envoyé avec succès !</strong> Nous vous répondrons dans les plus brefs délais.
+                            </div>
+                            <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold" style="color: var(--text-primary);">Nom complet <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="name" placeholder="Jean Dupont" required style="background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 12px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold" style="color: var(--text-primary);">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" name="email" placeholder="jean.dupont@exemple.com" required style="background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 12px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold" style="color: var(--text-primary);">Téléphone</label>
+                                        <input type="tel" class="form-control" name="phone" placeholder="+225 07 XX XX XX XX" style="background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 12px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold" style="color: var(--text-primary);">Entreprise</label>
+                                        <input type="text" class="form-control" name="company" placeholder="Nom de votre entreprise" style="background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 12px;">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold" style="color: var(--text-primary);">Sujet <span class="text-danger">*</span></label>
+                                        <select class="form-select" name="subject" required style="background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 12px;">
+                                            <option value="">Sélectionnez un sujet</option>
+                                            <option value="demo">Demander une démo</option>
+                                            <option value="pricing">Question sur les tarifs</option>
+                                            <option value="support">Support technique</option>
+                                            <option value="partnership">Partenariat</option>
+                                            <option value="other">Autre question</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold" style="color: var(--text-primary);">Message <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" name="message" rows="6" placeholder="Décrivez votre projet ou posez-nous votre question..." required style="background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 12px; resize: vertical;"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="privacyCheck" required style="border: 1px solid var(--border-color);">
+                                            <label class="form-check-label small text-secondary" for="privacyCheck">
+                                                J'accepte que mes données soient utilisées pour me recontacter. <a href="#" class="text-primary">Politique de confidentialité</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary-modern btn-lg w-100">
+                                            <span><i class="bi bi-send-fill me-2"></i>Envoyer le Message</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="scroll-reveal" style="animation-delay: 0.2s;">
+                        <h2 class="mb-4" style="color: var(--text-primary);">Nos Coordonnées</h2>
+                        <p class="text-secondary mb-4">Vous préférez nous contacter directement ? Voici nos coordonnées. Nous sommes disponibles du lundi au vendredi de 8h à 18h.</p>
+                        <div class="row g-4 mb-5">
+                            <div class="col-12">
+                                <div class="modern-card" style="background: var(--bg-secondary); border-left: 4px solid var(--accent-primary);">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon me-3" style="width: 50px; height: 50px; flex-shrink: 0;">
+                                            <i class="bi bi-telephone-fill"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-2" style="color: var(--text-primary);">Téléphone</h5>
+                                            <p class="text-secondary mb-1">Appelez-nous directement</p>
+                                            <a href="tel:+22507871689003" class="fw-bold" style="font-size: 1.1rem; color: var(--accent-primary);">+225 07 87 16 89 03</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="modern-card" style="background: var(--bg-secondary); border-left: 4px solid var(--accent-secondary);">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon me-3" style="width: 50px; height: 50px; flex-shrink: 0; background: var(--accent-secondary);">
+                                            <i class="bi bi-envelope-fill"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-2" style="color: var(--text-primary);">Email</h5>
+                                            <p class="text-secondary mb-1">Écrivez-nous par email</p>
+                                            <a href="mailto:infos@aude.ci" class="fw-bold" style="font-size: 1.1rem; color: var(--accent-secondary);">infos@aude.ci</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="modern-card" style="background: var(--bg-secondary); border-left: 4px solid var(--accent-success);">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon me-3" style="width: 50px; height: 50px; flex-shrink: 0; background: var(--accent-success);">
+                                            <i class="bi bi-whatsapp"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-2" style="color: var(--text-primary);">WhatsApp</h5>
+                                            <p class="text-secondary mb-1">Messagerie instantanée</p>
+                                            <a href="https://wa.me/22507871689003" target="_blank" class="fw-bold" style="font-size: 1.1rem; color: var(--accent-success);">Démarrer une conversation</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="modern-card" style="background: var(--bg-secondary); border-left: 4px solid var(--accent-warning);">
+                                    <div class="d-flex align-items-start">
+                                        <div class="feature-icon me-3" style="width: 50px; height: 50px; flex-shrink: 0; background: var(--accent-warning);">
+                                            <i class="bi bi-globe2"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-2" style="color: var(--text-primary);">Site Web</h5>
+                                            <p class="text-secondary mb-1">Visitez notre plateforme</p>
+                                            <a href="https://www.aude.ci" target="_blank" class="fw-bold" style="font-size: 1.1rem; color: var(--accent-warning);">www.aude.ci</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modern-card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; text-align: center; padding: 2.5rem;">
+                            <h4 class="mb-3 text-white">Besoin d'une Démo ?</h4>
+                            <p class="mb-4" style="opacity: 0.9;">Découvrez Aude en action avec une démonstration personnalisée de 30 minutes.</p>
+                            <a href="https://app.aude.ci" class="btn btn-lg" target="_blank" style="background: white; color: var(--accent-primary); border: none; font-weight: 600;">
+                                <span><i class="bi bi-calendar-check me-2"></i>Réserver une Démo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section section-alt">
+        <div class="container">
+            <div class="text-center scroll-reveal">
+                <h2 class="section-title text-gradient mb-4">Questions Fréquentes Avant Contact</h2>
+                <p class="section-subtitle mb-5">Peut-être que votre question a déjà une réponse !</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="scroll-reveal">
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(this)">
+                                <i class="bi bi-plus-circle me-3 text-primary"></i>
+                                Quel est le délai de réponse moyen ?
+                            </button>
+                            <div class="faq-answer">
+                                Notre équipe répond généralement dans les 24 heures ouvrées. Pour les demandes urgentes, n'hésitez pas à nous appeler directement au +225 07 87 16 89 03 ou à nous contacter via WhatsApp.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(this)">
+                                <i class="bi bi-plus-circle me-3 text-primary"></i>
+                                Puis-je planifier une démo en ligne ?
+                            </button>
+                            <div class="faq-answer">
+                                Absolument ! Nous proposons des démonstrations personnalisées de 30 minutes pour vous présenter Aude. Contactez-nous via ce formulaire en sélectionnant "Demander une démo" et nous vous proposerons des créneaux disponibles.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(this)">
+                                <i class="bi bi-plus-circle me-3 text-primary"></i>
+                                Proposez-vous un support en français ?
+                            </button>
+                            <div class="faq-answer">
+                                Oui, notre équipe est francophone et basée en Côte d'Ivoire. Nous comprenons parfaitement les spécificités locales du BTP et de l'architecture. Tout notre support est disponible en français.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(this)">
+                                <i class="bi bi-plus-circle me-3 text-primary"></i>
+                                Y a-t-il des frais cachés ?
+                            </button>
+                            <div class="faq-answer">
+                                Non, aucun frais caché. Nos tarifs sont transparents et incluent toutes les fonctionnalités annoncées. L'essai gratuit de 30 jours ne nécessite aucune carte bancaire et vous pouvez l'annuler à tout moment sans frais.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

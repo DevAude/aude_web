@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- À Qui s'adresse Aude ? -->
+
+<section class="section" id="pourqui">
+    <div class="container">
+        <div class="scroll-reveal">
+            <h2 class="section-title text-gradient">À Qui s'adresse Aude ?</h2>
+            <p class="section-subtitle">
+                Aude est spécialement conçu pour les professionnels du BTP et de l'architecture qui souhaitent moderniser leur gestion de projet.
+                Notre solution digitale s'adapte à votre métier pour optimiser chaque aspect de votre activité.
+            </p>
+        </div>
+        <div class="row g-4">
+            {% for audience in audiences %}
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card scroll-reveal text-center" style="animation-delay: {{ forloop.counter0|floatformat:1 }}s;">
+                    <div class="feature-icon mx-auto">
+                        <i class="{{ audience.icon }}"></i>
+                    </div>
+                    <h4 class="mb-3">{{ audience.title }}</h4>
+                    <p class="text-secondary mb-4">{{ audience.description }}</p>
+                    <div class="mb-3 badge-group">
+                        {% if audience.badge_1 %}<span class="badge-modern">{{ audience.badge_1 }}</span>{% endif %}
+                        {% if audience.badge_2 %}<span class="badge-modern">{{ audience.badge_2 }}</span>{% endif %}
+                        {% if audience.badge_3 %}<span class="badge-modern">{{ audience.badge_3 }}</span>{% endif %}
+                    </div>
+                    <ul class="list-unstyled text-start small text-secondary">
+                        {% if audience.bullet_1 %}<li>✓ {{ audience.bullet_1 }}</li>{% endif %}
+                        {% if audience.bullet_2 %}<li>✓ {{ audience.bullet_2 }}</li>{% endif %}
+                        {% if audience.bullet_3 %}<li>✓ {{ audience.bullet_3 }}</li>{% endif %}
+                        {% if audience.bullet_4 %}<li>✓ {{ audience.bullet_4 }}</li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Fonctionnalités BTP -->
+
+<section class="section section-alt" id="fonctionnalites-btp">
+    <div class="container">
+        <div class="scroll-reveal">
+            <h2 class="section-title text-gradient">
+                <i class="bi bi-tools me-2"></i>Aude BTP - Révolution de la gestion de chantier
+            </h2>
+            <p class="section-subtitle">
+                Des outils technologiques de pointe pour transformer vos projets de construction.
+            </p>
+        </div>
+        <div class="row g-4">
+            {% for feature in btp_features %}
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card scroll-reveal" style="animation-delay: {{ forloop.counter0|floatformat:1 }}s;">
+                    <div class="feature-icon"><i class="{{ feature.icon }}"></i></div>
+                    <h4 class="mb-3">{{ feature.title }}</h4>
+                    <p class="text-secondary mb-3">{{ feature.description }}</p>
+                    <div class="mb-3 badge-group">
+                        {% if feature.badge_1 %}<span class="badge-modern me-1">{{ feature.badge_1 }}</span>{% endif %}
+                        {% if feature.badge_2 %}<span class="badge-modern me-1">{{ feature.badge_2 }}</span>{% endif %}
+                        {% if feature.badge_3 %}<span class="badge-modern me-1">{{ feature.badge_3 }}</span>{% endif %}
+                    </div>
+                    <ul class="list-unstyled small text-secondary">
+                        {% if feature.bullet_1 %}<li>✓ {{ feature.bullet_1 }}</li>{% endif %}
+                        {% if feature.bullet_2 %}<li>✓ {{ feature.bullet_2 }}</li>{% endif %}
+                        {% if feature.bullet_3 %}<li>✓ {{ feature.bullet_3 }}</li>{% endif %}
+                        {% if feature.bullet_4 %}<li>✓ {{ feature.bullet_4 }}</li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Fonctionnalités Architecture -->
+
+<section class="section" id="fonctionnalites-archi">
+    <div class="container">
+        <div class="scroll-reveal">
+            <h2 class="section-title text-gradient">
+                <i class="bi bi-compass me-2"></i>Aude Architecture - Créativité augmentée par la technologie
+            </h2>
+            <p class="section-subtitle">
+                Une solution révolutionnaire où la technologie moderne amplifie votre créativité et optimise vos processus de conception.
+            </p>
+        </div>
+        <div class="row g-4">
+            {% for feature in archi_features %}
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card scroll-reveal" style="animation-delay: {{ forloop.counter0|floatformat:1 }}s;">
+                    <div class="feature-icon"><i class="{{ feature.icon }}"></i></div>
+                    <h4 class="mb-3">{{ feature.title }}</h4>
+                    <p class="text-secondary mb-3">{{ feature.description }}</p>
+                    <div class="mb-3 badge-group">
+                        {% if feature.badge_1 %}<span class="badge-modern me-1">{{ feature.badge_1 }}</span>{% endif %}
+                        {% if feature.badge_2 %}<span class="badge-modern me-1">{{ feature.badge_2 }}</span>{% endif %}
+                        {% if feature.badge_3 %}<span class="badge-modern me-1">{{ feature.badge_3 }}</span>{% endif %}
+                    </div>
+                    <ul class="list-unstyled small text-secondary">
+                        {% if feature.bullet_1 %}<li>✓ {{ feature.bullet_1 }}</li>{% endif %}
+                        {% if feature.bullet_2 %}<li>✓ {{ feature.bullet_2 }}</li>{% endif %}
+                        {% if feature.bullet_3 %}<li>✓ {{ feature.bullet_3 }}</li>{% endif %}
+                        {% if feature.bullet_4 %}<li>✓ {{ feature.bullet_4 }}</li>{% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+
+{% if cta %}
+<section class="section-alt bg-gradient-primary">
+    <div class="container">
+        <div class="scroll-reveal text-center">
+            <h2 class="section-title text-white mb-4">{{ cta.title }}</h2>
+            <p class="lead text-white mb-5" style="opacity: 0.9;">{{ cta.subtitle }}</p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap mb-4">
+                <a href="{{ cta.primary_url }}" class="btn btn-primary-modern btn-lg pulse" target="_blank"
+                   style="background: white; color: var(--accent-primary); border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <span>{{ cta.primary_text }}</span>
+                </a>
+                <a href="{{ cta.secondary_url }}" class="btn btn-outline-modern btn-lg"
+                   style="border-color: white; color: white;">
+                    <span>{{ cta.secondary_text }}</span>
+                </a>
+            </div>
+
+            <p class="text-white mb-0" style="opacity: 0.8;">
+                {% if cta.highlight_1 %}<i class="bi bi-shield-lock me-1"></i><strong>{{ cta.highlight_1 }}</strong> •{% endif %}
+                {% if cta.highlight_2 %}<i class="bi bi-credit-card-2-front-fill me-1"></i><strong>{{ cta.highlight_2 }}</strong> •{% endif %}
+                {% if cta.highlight_3 %}<i class="bi bi-headset me-1"></i><strong>{{ cta.highlight_3 }}</strong>{% endif %}
+            </p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}
