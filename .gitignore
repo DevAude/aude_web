@@ -1,0 +1,68 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# === Environnements virtuels ===
+venv/
+env/
+.venv/
+.env/
+*.env
+
+# === Django ===
+db.sqlite3
+db.sqlite3-journal
+
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+staticfiles/
+static/
+media/
+logs/
+*.log
+
+# Ignorer wsgi et settings (ton ajout)
+aude_web/wsgi.py
+aude_web/settings.py
+# ou si tu veux ignorer tout un dossier :
+# aude_web/settings/
+
+# === Configuration et secrets ===
+.env
+.env.*
+secret_key.txt
+
+# === IDE / Éditeurs ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Tests ===
+.coverage
+htmlcov/
+.tox/
+pytest_cache/
+
+# === PythonAnywhere ===
+*.wsgi
+
+# === Node ===
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
