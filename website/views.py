@@ -7,7 +7,7 @@ from .models import AdvantageItem
 from .models import CallToAction
 from .models import AboutHero, AboutPillar, AboutStat, AboutCTA
 from .models import SolutionAudienceCategory, SolutionFeatureBTP, SolutionFeatureArchitecture, SolutionCTA
-from .models import PricingPlan, PricingFeature, FAQ, CTASection
+from .models import PricingPlan, PricingFeature, FAQ, CTASection, Testimonial
 
 
 
@@ -16,10 +16,11 @@ def home(request):
     hero_section = HeroSection.objects.first()
     stats = StatItem.objects.all()
     ctas = CallToAction.objects.filter(is_active=True)
+    testimonials = Testimonial.objects.all()
 
     advantages = AdvantageItem.objects.all()
 
-    return render(request, "home.html", {"hero_section": hero_section, "stats": stats, "advantages": advantages,"ctas": ctas})
+    return render(request, "home.html", {"hero_section": hero_section, "stats": stats, "advantages": advantages,"ctas": ctas,"testimonials": testimonials,})
 
 
 def a_propos(request):

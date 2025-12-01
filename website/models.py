@@ -426,7 +426,7 @@ class SolutionCTA(models.Model):
         return self.title
 
 
-#   
+#
 
 class PricingPlan(models.Model):
     """
@@ -700,3 +700,26 @@ class CTASection(models.Model):
 
     def __str__(self):
         return f"CTA - {self.get_page_display()}"
+
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nom du client")
+    position = models.CharField(max_length=100, verbose_name="Poste / Fonction")
+    company = models.CharField(max_length=100, verbose_name="Société")
+    photo = models.ImageField(upload_to="testimonials/", null=True, blank=True, verbose_name="Photo")
+    testimonial = models.TextField(verbose_name="Témoignage")
+    tags = models.CharField(max_length=200, blank=True, help_text="Séparez les mots-clés par des virgules")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Témoignage"
+        verbose_name_plural = "Témoignages"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name} - {self.company}"
+
+    def get_tags_list(self):
+        """Retourne les tags sous forme de liste."""
+        return [tag.strip() for tag in self.tags.split(",") if tag.strip()]

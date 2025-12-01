@@ -4,16 +4,33 @@ from .models import StatItem
 from .models import AdvantageItem
 from .models import CallToAction
 from .models import AboutHero, AboutPillar, AboutStat, AboutCTA
+from .models import Testimonial
+
+
 
 from .models import (
     SolutionAudienceCategory, SolutionFeatureBTP, SolutionFeatureArchitecture, SolutionCTA
 )
-from .models import PricingPlan, PricingFeature, FAQ, CTASection
+from .models import PricingPlan, PricingFeature, FAQ, CTASection, Testimonial
 
 
 
 
-
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ('name', 'position', 'company', 'created_at')
+    search_fields = ('name', 'company', 'position', 'testimonial')
+    list_filter = ('created_at',)
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ('-created_at',)
+    fieldsets = (
+    (None, {
+    'fields': ('name', 'position', 'company', 'photo', 'testimonial', 'tags')
+    }),
+    ('Dates', {
+    'fields': ('created_at', 'updated_at')
+    }),
+)
 @admin.register(HeroSection)
 class HeroSectionAdmin(admin.ModelAdmin):
     list_display = ("id", "badge", "title_part1", "title_part2")
