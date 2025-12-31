@@ -34,8 +34,6 @@ logs/
 *.log
 
 # Ignorer wsgi et settings (ton ajout)
-aude_web/wsgi.py
-aude_web/settings.py
 # ou si tu veux ignorer tout un dossier :
 # aude_web/settings/
 

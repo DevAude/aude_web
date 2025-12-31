@@ -12,6 +12,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Categorie(models.Model):
@@ -175,7 +176,7 @@ class Article(models.Model):
         max_length=300,
         help_text="Résumé court pour les cartes (max 300 caractères)"
     )
-    contenu = models.TextField(
+    contenu = RichTextUploadingField(
         help_text="Contenu complet de l'article (Markdown supporté)"
     )
 

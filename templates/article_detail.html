@@ -231,47 +231,6 @@
                     </div>
                 </div>
 
-                <!-- Informations auteur (encadré) -->
-                {% if article.auteur %}
-                <div class="modern-card mt-5 p-4 scroll-reveal" style="animation-delay: 0.2s;">
-                    <div class="row align-items-center">
-                        {% if article.auteur.photo %}
-                        <div class="col-auto">
-                            <img
-                                src="{{ article.auteur.photo.url }}"
-                                alt="{{ article.auteur }}"
-                                class="rounded-circle"
-                                style="width: 80px; height: 80px; object-fit: cover;"
-                            >
-                        </div>
-                        {% endif %}
-                        <div class="col">
-                            <h5 class="mb-1">{{ article.auteur }}</h5>
-                            {% if article.auteur.poste %}
-                            <p class="text-muted mb-2">{{ article.auteur.poste }}</p>
-                            {% endif %}
-                            {% if article.auteur.bio %}
-                            <p class="mb-2">{{ article.auteur.bio }}</p>
-                            {% endif %}
-                            {% if article.auteur.linkedin or article.auteur.twitter %}
-                            <div class="d-flex gap-2">
-                                {% if article.auteur.linkedin %}
-                                <a href="{{ article.auteur.linkedin }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-linkedin"></i>
-                                </a>
-                                {% endif %}
-                                {% if article.auteur.twitter %}
-                                <a href="{{ article.auteur.twitter }}" target="_blank" class="btn btn-sm btn-outline-info">
-                                    <i class="bi bi-twitter"></i>
-                                </a>
-                                {% endif %}
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
             </div>
         </div>
     </div>
